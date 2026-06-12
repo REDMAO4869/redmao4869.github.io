@@ -114,19 +114,21 @@
     }
 
     .avatar {
-      display: grid;
-      place-items: center;
       width: 156px;
       height: 156px;
       margin: 0 auto 18px;
       border: 1px solid var(--line);
       border-radius: 50%;
-      color: var(--accent);
-      background:
-        linear-gradient(135deg, rgba(37, 92, 153, 0.11), rgba(122, 77, 21, 0.08)),
-        var(--paper);
-      font-size: 44px;
-      font-weight: 800;
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .avatar img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 18%;
     }
 
     .profile h1 {
@@ -255,6 +257,33 @@
       font-size: 15px;
     }
 
+    .news-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .news-list li {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      margin: 0;
+      padding: 0 0 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .news-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .news-date {
+      color: var(--accent);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
     .tag-row {
       display: flex;
       flex-wrap: wrap;
@@ -350,6 +379,11 @@
       .two-column {
         grid-template-columns: 1fr;
       }
+
+      .news-list li {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
     }
 
     @media (max-width: 560px) {
@@ -382,12 +416,10 @@
       <a class="site-title" href="#about">Junfeng Xia</a>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#projects">Projects</a>
+        <a href="#news">News</a>
         <a href="#publications">Publications</a>
-        <a href="#education">Education</a>
-        <a href="#honors">Honors</a>
-        <a href="#skills">Skills</a>
+        <a href="#books">Books</a>
+        <a href="#service">Service</a>
       </nav>
     </div>
   </header>
@@ -395,7 +427,9 @@
   <main class="shell">
     <aside class="sidebar" aria-label="Profile">
       <section class="profile">
-        <div class="avatar" aria-label="Profile image placeholder">JX</div>
+        <div class="avatar">
+          <img src="assets/profile.jpg" alt="Junfeng Xia">
+        </div>
         <div>
           <h1>Junfeng Xia</h1>
           <p class="role">M.Sc. Student in Biomedical Engineering<br>Southern University of Science and Technology</p>
@@ -414,70 +448,35 @@
 
     <div class="content">
       <section class="intro" id="about">
-        <h2>Academic homepage</h2>
+        <h2>About</h2>
         <p class="lead">
-          I am a master's student in Biomedical Engineering at Southern University of Science and Technology,
-          advised by Prof. Quanying Liu. My research focuses on fMRI foundation models, whole-brain predictive
-          dynamics, information decomposition, and scalable representation learning for neuroimaging.
+          I am Junfeng Xia, a master's student in Biomedical Engineering at Southern University of Science and
+          Technology, advised by Prof. Quanying Liu. Before joining SUSTech, I received my B.Eng. in Computer
+          Science and Technology from Zhengzhou University, where I was advised by Prof. Qidong Liu.
         </p>
         <p>
-          I am interested in building models that can learn from large-scale neural time series while remaining
-          interpretable enough to support scientific questions about brain dynamics, network organization, and
-          cognition.
+          My research interests include fMRI foundation models, predictive modeling of whole-brain dynamics,
+          prediction-based information decomposition, scalable neuroimaging representation learning, brain
+          network analysis, and NeuroAI. I am particularly interested in models that can learn from large-scale
+          neural time series while remaining interpretable enough to support scientific questions about brain
+          dynamics and cognition.
         </p>
       </section>
 
-      <section class="section" id="research">
-        <h2>Research Interests</h2>
-        <p>
-          My current work sits at the intersection of computational neuroscience, machine learning, and
-          neuroimaging. I am particularly interested in foundation models for fMRI, predictive modeling of
-          future brain states, information-theoretic decomposition of neural dynamics, and brain network analysis.
-        </p>
-        <div class="tag-row" aria-label="Research keywords">
-          <span class="tag">fMRI foundation models</span>
-          <span class="tag">brain dynamics</span>
-          <span class="tag">predictive modeling</span>
-          <span class="tag">information decomposition</span>
-          <span class="tag">NeuroAI</span>
-          <span class="tag">brain networks</span>
-          <span class="tag">BCI</span>
-        </div>
-      </section>
-
-      <section class="section" id="projects">
-        <h2>Selected Projects</h2>
-        <div class="highlight-grid">
-          <article class="highlight">
-            <h3>Brain-DiT</h3>
-            <p>Metadata-conditioned diffusion transformer for multi-state fMRI foundation modeling across resting, task, naturalistic, clinical, and sleep data.</p>
-          </article>
-          <article class="highlight">
-            <h3>BrainWorld</h3>
-            <p>Structural-prior world model for whole-brain 4D fMRI generation and predictive brain dynamics modeling.</p>
-          </article>
-          <article class="highlight">
-            <h3>Prediction-based Information Decomposition</h3>
-            <p>An fMRI-adapted neural forecasting framework for decomposing future whole-brain predictive support into redundant, unique, and synergistic components.</p>
-          </article>
-          <article class="highlight">
-            <h3>SLIM-Brain / FlexiBrain / Omni-fMRI</h3>
-            <p>Voxel-level and native-resolution fMRI representation learning frameworks for efficient, scalable, and atlas-free foundation modeling.</p>
-          </article>
-        </div>
+      <section class="section" id="news">
+        <h2>News</h2>
+        <ul class="news-list">
+          <li><span class="news-date">2026</span><span><strong>Omni-fMRI</strong> was accepted by the International Conference on Machine Learning.</span></li>
+          <li><span class="news-date">2025</span><span>Our work on ultralow-power ion-gel nanofiber artificial synapses for enhanced working memory was published in <em>Advanced Materials</em>.</span></li>
+          <li><span class="news-date">Jun 2025</span><span>I was selected for the Croucher Summer Course in Computational Neuroscience at the Chinese University of Hong Kong.</span></li>
+          <li><span class="news-date">2025</span><span>I received the Award of Excellence for Poster Presentation at BME Research Day.</span></li>
+          <li><span class="news-date">2024</span><span>I received the Best Poster Award for BI&amp;AI 2024.</span></li>
+        </ul>
       </section>
 
       <section class="section" id="publications">
-        <h2>Publications and Manuscripts</h2>
+        <h2>Publications</h2>
         <p class="note">* denotes equal contribution. Status labels follow the current CV.</p>
-
-        <h3>Selected Highlights</h3>
-        <ul class="publication-list">
-          <li><strong>Brain-DiT</strong>: universal multi-state fMRI foundation modeling with metadata-conditioned pretraining. MICCAI 2026, under review. <span class="meta">First author.</span></li>
-          <li><strong>BrainWorld</strong>: structural-prior-conditioned generative modeling for whole-brain 4D fMRI dynamics. NeurIPS 2026, under review. <span class="meta">First author.</span></li>
-          <li><strong>Prediction-based decomposition</strong>: uncovering information hubs in human brain dynamics. <span class="meta">Manuscript in preparation, first author.</span></li>
-          <li><strong>SLIM-Brain</strong> and <strong>FlexiBrain</strong>: efficient voxel-level and resolution-agnostic fMRI foundation models. ECCV 2026, under review. <span class="meta">Co-first author.</span></li>
-        </ul>
 
         <h3>Accepted and Published</h3>
         <ul class="publication-list">
@@ -498,51 +497,20 @@
         </ul>
       </section>
 
-      <section class="section" id="education">
-        <h2>Education and Training</h2>
-        <div class="two-column">
-          <div>
-            <h3>Education</h3>
-            <ul class="compact-list">
-              <li><strong>Southern University of Science and Technology</strong><br>M.Sc. in Biomedical Engineering, 2024-present<br><span class="meta">Advisor: Prof. Quanying Liu</span></li>
-              <li><strong>Zhengzhou University</strong><br>B.Eng. in Computer Science and Technology, 2020-2024<br><span class="meta">Advisor: Prof. Qidong Liu</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Research Visits and Training</h3>
-            <ul class="compact-list">
-              <li>Visiting Student, Neural Computing and Control Lab, Southern University of Science and Technology, 2023-2024.</li>
-              <li>Selected participant, Croucher Summer Course in Computational Neuroscience, Chinese University of Hong Kong, Jun. 2025.</li>
-            </ul>
-          </div>
-        </div>
+      <section class="section" id="books">
+        <h2>Books</h2>
+        <p class="note">Book publications and book chapters will be listed here.</p>
       </section>
 
-      <section class="section" id="honors">
-        <h2>Honors and Awards</h2>
+      <section class="section" id="service">
+        <h2>Service</h2>
+        <h3>Academic Activities</h3>
         <ul class="compact-list">
+          <li>Visiting Student, Neural Computing and Control Lab, Southern University of Science and Technology, 2023-2024.</li>
+          <li>Selected participant, Croucher Summer Course in Computational Neuroscience, Chinese University of Hong Kong, Jun. 2025.</li>
           <li>Award of Excellence for Poster Presentation, BME Research Day, 2025.</li>
           <li>Best Poster Award for BI&amp;AI 2024, 2024.</li>
         </ul>
-      </section>
-
-      <section class="section" id="skills">
-        <h2>Skills</h2>
-        <div class="tag-row" aria-label="Skills">
-          <span class="tag">Python</span>
-          <span class="tag">C/C++</span>
-          <span class="tag">Java</span>
-          <span class="tag">SQL</span>
-          <span class="tag">Linux</span>
-          <span class="tag">Git</span>
-          <span class="tag">LaTeX</span>
-          <span class="tag">PyTorch</span>
-          <span class="tag">NumPy</span>
-          <span class="tag">SciPy</span>
-          <span class="tag">scikit-learn</span>
-          <span class="tag">DeepPrep</span>
-          <span class="tag">fMRI analysis</span>
-        </div>
       </section>
 
       <footer>
