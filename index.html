@@ -176,6 +176,27 @@
       font-size: 14px;
     }
 
+    .keyword-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 0;
+      padding: 16px 0 0;
+      border-top: 1px solid var(--line);
+      list-style: none;
+    }
+
+    .keyword-list li {
+      margin: 0;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--paper);
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
     .content {
       min-width: 0;
     }
@@ -440,9 +461,11 @@
           <li><span class="icon">G</span><a href="https://github.com/REDMAO4869">GitHub</a></li>
           <li><span class="icon">S</span><a href="https://scholar.google.com/citations?user=VBB6XN8AAAAJ&amp;hl=en/">Google Scholar</a></li>
         </ul>
-        <p class="profile-note">
-          I study fMRI foundation models, predictive brain dynamics, and interpretable neural representation learning.
-        </p>
+        <ul class="keyword-list" aria-label="Research keywords">
+          <li>fMRI foundation model</li>
+          <li>Brain World model</li>
+          <li>Information architecture of the brain</li>
+        </ul>
       </section>
     </aside>
 
@@ -455,51 +478,40 @@
           Science and Technology from Zhengzhou University, where I was advised by Prof. Qidong Liu.
         </p>
         <p>
-          My research interests include fMRI foundation models, predictive modeling of whole-brain dynamics,
-          prediction-based information decomposition, scalable neuroimaging representation learning, brain
-          network analysis, and NeuroAI. I am particularly interested in models that can learn from large-scale
-          neural time series while remaining interpretable enough to support scientific questions about brain
-          dynamics and cognition.
+          My research interests include fMRI foundation model, Brain World model, and the information
+          architecture of the brain.
         </p>
       </section>
 
       <section class="section" id="news">
         <h2>News</h2>
         <ul class="news-list">
-          <li><span class="news-date">2026</span><span><strong>Omni-fMRI</strong> was accepted by the International Conference on Machine Learning.</span></li>
-          <li><span class="news-date">2025</span><span>Our work on ultralow-power ion-gel nanofiber artificial synapses for enhanced working memory was published in <em>Advanced Materials</em>.</span></li>
+          <li><span class="news-date">Apr 2026</span><span><strong>Omni-fMRI</strong> was accepted by the <strong>International Conference on Machine Learning</strong>.</span></li>
+          <li><span class="news-date">May 2025</span><span>Our work on ultralow-power ion-gel nanofiber artificial synapses for enhanced working memory was published in <strong>Advanced Materials</strong>.</span></li>
           <li><span class="news-date">Jun 2025</span><span>I was selected for the Croucher Summer Course in Computational Neuroscience at the Chinese University of Hong Kong.</span></li>
-          <li><span class="news-date">2025</span><span>I received the Award of Excellence for Poster Presentation at BME Research Day.</span></li>
-          <li><span class="news-date">2024</span><span>I received the Best Poster Award for BI&amp;AI 2024.</span></li>
+          <li><span class="news-date">2024</span><span><strong>Uncovering Cognitive Taskonomy through Transfer Learning in Masked Autoencoder-based fMRI Reconstruction</strong> was published in <strong>HBAI</strong>.</span></li>
+          <li><span class="news-date">2024</span><span><strong>A Genetic Algorithms for Optimizing Structural Brain Network Across Cognitive Tasks</strong> was published in <strong>China Automation Congress</strong>.</span></li>
         </ul>
       </section>
 
       <section class="section" id="publications">
         <h2>Publications</h2>
-        <p class="note">* denotes equal contribution. Status labels follow the current CV.</p>
-
-        <h3>Accepted and Published</h3>
+        <p class="note">* denotes equal contribution.</p>
         <ul class="publication-list">
-          <li>Y. Chen, <strong>J. Xia</strong>, Y. Qu, ..., Q. Liu &amp; K. Xiao. Ephaptic Coupling in Ultralow-Power Ion-Gel Nanofiber Artificial Synapses for Enhanced Working Memory. <em>Advanced Materials</em>, 37(16), 2419013, 2025.</li>
-          <li>M. Wang, W. Ye, <strong>J. Xia</strong>, ..., H. Wen &amp; Q. Liu. Omni-fMRI: A Universal Atlas-Free fMRI Foundation Model. <em>International Conference on Machine Learning</em>, accepted, 2026.</li>
-          <li>Y. Qu*, <strong>J. Xia*</strong>, X. Jian, ..., H. Wu &amp; Q. Liu. Uncovering Cognitive Taskonomy through Transfer Learning in Masked Autoencoder-based fMRI Reconstruction. <em>HBAI</em>, 35-50, 2024.</li>
-          <li>Y. Qu, W. Li, <strong>J. Xia</strong>, ..., H. Wu &amp; Q. Liu. A Genetic Algorithms for Optimizing Structural Brain Network Across Cognitive Tasks. <em>China Automation Congress</em>, 5210-5215, 2024.</li>
-        </ul>
-
-        <h3>Under Review and In Preparation</h3>
-        <ul class="publication-list">
-          <li><strong>J. Xia</strong>, W. Ye, X. Pan, ..., M. Wang &amp; Q. Liu. Brain-DiT: A Universal Multi-state fMRI Foundation Model with Metadata-Conditioned Pretraining. MICCAI 2026, under review. <span class="meta">First author.</span></li>
-          <li><strong>J. Xia</strong>, W. Ye, J. Zhang, ..., M. Wang &amp; Q. Liu. BrainWorld: A Structural-Prior-Conditioned Generative Model for Whole-Brain 4D fMRI Dynamics. NeurIPS 2026, under review. <span class="meta">First author.</span></li>
-          <li><strong>J. Xia</strong> &amp; Q. Liu. Uncovering information hubs in human brain dynamics through prediction-based decomposition. Manuscript in preparation. <span class="meta">First author.</span></li>
-          <li>M. Wang*, <strong>J. Xia*</strong>, W. Ye, ..., Q. Liu &amp; H. Wen. SLIM-Brain: Selective Long-Range Modeling for Efficient Voxel-Level fMRI Foundation Models. ECCV 2026, under review. <span class="meta">Co-first author.</span></li>
-          <li>M. Wang*, W. Ye*, <strong>J. Xia*</strong>, M. Xu, H. Wen &amp; Q. Liu. FlexiBrain: Resolution-Agnostic Voxel-Level Encoding for Native fMRI. ECCV 2026, under review. <span class="meta">Co-first author.</span></li>
-          <li>M. Wang, W. Ye, Z. Ning, ..., <strong>J. Xia</strong>, H. Wen &amp; Q. Liu. FlatClip: Reusing Image Foundation Models for fMRI Representation Learning via Cortical Flatmaps. NeurIPS 2026, under review.</li>
+          <li><strong>Junfeng Xia</strong>, Wenhao Ye, Xuanye Pan, Xinke Shen, Mo Wang, and Quanying Liu. Brain-DiT: A Universal Multi-state fMRI Foundation Model with Metadata-Conditioned Pretraining. <strong>arXiv:2604.12683</strong>, 2026. <span class="meta">First author.</span></li>
+          <li>Mo Wang*, Wenhao Ye*, <strong>Junfeng Xia*</strong>, Minghao Xu, Hongkai Wen, and Quanying Liu. FlexiBrain: Resolution-Agnostic Voxel-Level Encoding for Native fMRI. <strong>arXiv:2606.11500</strong>, 2026. <span class="meta">Co-first author.</span></li>
+          <li>Mo Wang*, Wenhao Ye*, <strong>Junfeng Xia</strong>, Junxiang Zhang, Xuanye Pan, Minghao Xu, Haotian Deng, Hongkai Wen, and Quanying Liu. Omni-fMRI: A Universal Atlas-Free fMRI Foundation Model. <strong>International Conference on Machine Learning</strong>, accepted, 2026.</li>
+          <li>Yuanxia Chen, <strong>Junfeng Xia</strong>, Youzhi Qu, Hongjie Zhang, Tingting Mei, Xinyi Zhu, Guoheng Xu, Dongyang Li, Li Wang, Quanying Liu, and Kai Xiao. Ephaptic Coupling in Ultralow-Power Ion-Gel Nanofiber Artificial Synapses for Enhanced Working Memory. <strong>Advanced Materials</strong>, 37(16), 2419013, 2025.</li>
+          <li>Youzhi Qu*, <strong>Junfeng Xia*</strong>, Xinyao Jian, Wendu Li, Kaining Peng, Zhichao Liang, Haiyan Wu, and Quanying Liu. Uncovering Cognitive Taskonomy through Transfer Learning in Masked Autoencoder-based fMRI Reconstruction. <strong>HBAI</strong>, 35-50, 2024.</li>
+          <li>Youzhi Qu, Wendu Li, <strong>Junfeng Xia</strong>, Jiahao Tang, Kaining Peng, Zhichao Liang, Haiyan Wu, and Quanying Liu. A Genetic Algorithms for Optimizing Structural Brain Network Across Cognitive Tasks. <strong>China Automation Congress</strong>, 5210-5215, 2024.</li>
         </ul>
       </section>
 
       <section class="section" id="books">
         <h2>Books</h2>
-        <p class="note">Book publications and book chapters will be listed here.</p>
+        <ul class="publication-list">
+          <li><em>Human Brain Intelligence and Artificial Intelligence</em>. <strong>Tsinghua University Press</strong>, 2025.</li>
+        </ul>
       </section>
 
       <section class="section" id="service">
@@ -508,8 +520,6 @@
         <ul class="compact-list">
           <li>Visiting Student, Neural Computing and Control Lab, Southern University of Science and Technology, 2023-2024.</li>
           <li>Selected participant, Croucher Summer Course in Computational Neuroscience, Chinese University of Hong Kong, Jun. 2025.</li>
-          <li>Award of Excellence for Poster Presentation, BME Research Day, 2025.</li>
-          <li>Best Poster Award for BI&amp;AI 2024, 2024.</li>
         </ul>
       </section>
 
