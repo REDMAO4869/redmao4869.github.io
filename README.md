@@ -1,7 +1,7 @@
-# REDMAO4869 GitHub Pages
+# Junfeng Xia Academic Homepage
 
 This repository hosts the personal homepage at:
 
 https://redmao4869.github.io
 
-The current version is a small static demo built with a single `index.html` file.
+The site is a static GitHub Pages homepage built with a single `index.html` file.
