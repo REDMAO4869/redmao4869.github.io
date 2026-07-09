@@ -393,9 +393,76 @@
       color: var(--ink);
     }
 
-    .publication-list .author-me {
+    .publication-list .author-me,
+    .publication-cards .author-me {
       color: var(--accent);
       font-weight: 700;
+    }
+
+    .publication-cards {
+      display: grid;
+      gap: 28px;
+      margin-top: 18px;
+    }
+
+    .publication-card {
+      display: grid;
+      grid-template-columns: minmax(220px, 36%) minmax(0, 1fr);
+      gap: 26px;
+      align-items: center;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .publication-card:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .publication-figure {
+      display: block;
+      margin: 0;
+    }
+
+    .publication-figure img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
+    }
+
+    .publication-entry {
+      min-width: 0;
+    }
+
+    .publication-title {
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.42;
+    }
+
+    .publication-title a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .publication-title a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .publication-authors,
+    .publication-venue {
+      margin: 0 0 6px;
+    }
+
+    .publication-venue strong {
+      color: var(--ink);
     }
 
     .note {
@@ -464,6 +531,15 @@
       .highlight-grid,
       .two-column {
         grid-template-columns: 1fr;
+      }
+
+      .publication-card {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .publication-figure img {
+        aspect-ratio: 16 / 9;
       }
 
       .news-list li {
@@ -573,17 +649,98 @@
       <section class="section" id="publications">
         <h2>Publications</h2>
         <p class="note">* denotes equal contribution.</p>
-        <ul class="publication-list">
-          <li><strong class="author-me">Junfeng Xia</strong>, Wenhao Ye, Xuanye Pan, Xinke Shen, Mo Wang, and Quanying Liu. <a href="https://arxiv.org/abs/2604.12683">Brain-DiT: A Universal Multi-state fMRI Foundation Model with Metadata-Conditioned Pretraining</a>.<br><strong>MICCAI</strong>, 2026. <span class="meta">First author.</span></li>
-          <li><strong class="author-me">Junfeng Xia</strong>, Wenhao Ye, Junxiang Zhang, Xuanye Pan, Mo Wang, and Quanying Liu. <a href="https://arxiv.org/abs/2606.17742">BrainWorld: A Structural-Prior-Conditioned Generative Model for Whole-Brain 4D fMRI Dynamics</a>.<br><strong>arXiv</strong>, 2026. <span class="meta">First author.</span></li>
-          <li>Mo Wang*, <strong class="author-me">Junfeng Xia*</strong>, Wenhao Ye, Enyu Liu, Kaining Peng, Jianfeng Feng, Quanying Liu, and Hongkai Wen. <a href="https://arxiv.org/abs/2512.21881">SLIM-Brain: A Data- and Training-Efficient Foundation Model for fMRI Data Analysis</a>.<br><strong>arXiv:2512.21881</strong>, 2025. <span class="meta">Co-first author.</span></li>
-          <li>Mo Wang*, Wenhao Ye*, <strong class="author-me">Junfeng Xia*</strong>, Minghao Xu, Hongkai Wen, and Quanying Liu. <a href="https://arxiv.org/abs/2606.11500">FlexiBrain: Resolution-Agnostic Voxel-Level Encoding for Native fMRI</a>.<br><strong>ECCV</strong>, 2026. <span class="meta">Co-first author.</span></li>
-          <li>Mo Wang*, Wenhao Ye*, <strong class="author-me">Junfeng Xia</strong>, Junxiang Zhang, Xuanye Pan, Minghao Xu, Haotian Deng, Hongkai Wen, and Quanying Liu. <a href="https://arxiv.org/abs/2601.23090">Omni-fMRI: A Universal Atlas-Free fMRI Foundation Model</a>.<br><strong>ICML</strong>, 2026.</li>
-          <li>Yuanxia Chen, <strong class="author-me">Junfeng Xia</strong>, Youzhi Qu, Hongjie Zhang, Tingting Mei, Xinyi Zhu, Guoheng Xu, Dongyang Li, Li Wang, Quanying Liu, and Kai Xiao. <a href="https://doi.org/10.1002/adma.202419013">Ephaptic Coupling in Ultralow-Power Ion-Gel Nanofiber Artificial Synapses for Enhanced Working Memory</a>.<br><strong>Advanced Materials</strong>, 37(16), 2419013, 2025.</li>
-          <li>Youzhi Qu*, <strong class="author-me">Junfeng Xia*</strong>, Xinyao Jian, Wendu Li, Kaining Peng, Zhichao Liang, Haiyan Wu, and Quanying Liu. <a href="https://arxiv.org/abs/2407.00033">Uncovering Cognitive Taskonomy through Transfer Learning in Masked Autoencoder-based fMRI Reconstruction</a>.<br><strong>HBAI,IJCAI(Oral)</strong>, 35-50, 2024. <span class="meta">Co-first author.</span></li>
-          <li><strong class="author-me">Junfeng Xia</strong>, Wendu Li, Mengjiao Zhang, and Jie Guo. <a href="https://arxiv.org/abs/2606.26279">Beyond Single-Source Cognitive Taskonomy: Multi-Source Task Relations through fMRI Transfer Learning</a>.<br><strong>arXiv:2606.26279</strong>, 2026. <span class="meta">First author.</span></li>
-          <li>Youzhi Qu*, Wendu Li*, <strong class="author-me">Junfeng Xia</strong>, Jiahao Tang, Kaining Peng, Zhichao Liang, Haiyan Wu, and Quanying Liu. <a href="https://ieeexplore.ieee.org/document/10865371/">A Genetic Algorithms for Optimizing Structural Brain Network Across Cognitive Tasks</a>.<br><strong>China Automation Congress</strong>, 5210-5215, 2024.</li>
-        </ul>
+        <div class="publication-cards">
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/brain-dit.png" alt="Brain-DiT framework overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://arxiv.org/abs/2604.12683">Brain-DiT: A Universal Multi-state fMRI Foundation Model with Metadata-Conditioned Pretraining</a></p>
+              <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Wenhao Ye, Xuanye Pan, Xinke Shen, Mo Wang, and Quanying Liu.</p>
+              <p class="publication-venue"><strong>MICCAI</strong>, 2026. <span class="meta">First author.</span></p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/brainworld.png" alt="BrainWorld framework overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://arxiv.org/abs/2606.17742">BrainWorld: A Structural-Prior-Conditioned Generative Model for Whole-Brain 4D fMRI Dynamics</a></p>
+              <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Wenhao Ye, Junxiang Zhang, Xuanye Pan, Mo Wang, and Quanying Liu.</p>
+              <p class="publication-venue"><strong>arXiv</strong>, 2026. <span class="meta">First author.</span></p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/slim-brain.png" alt="SLIM-Brain architecture overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://arxiv.org/abs/2512.21881">SLIM-Brain: A Data- and Training-Efficient Foundation Model for fMRI Data Analysis</a></p>
+              <p class="publication-authors">Mo Wang*, <strong class="author-me">Junfeng Xia*</strong>, Wenhao Ye, Enyu Liu, Kaining Peng, Jianfeng Feng, Quanying Liu, and Hongkai Wen.</p>
+              <p class="publication-venue"><strong>arXiv:2512.21881</strong>, 2025. <span class="meta">Co-first author.</span></p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/flexibrain.png" alt="FlexiBrain architecture overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://arxiv.org/abs/2606.11500">FlexiBrain: Resolution-Agnostic Voxel-Level Encoding for Native fMRI</a></p>
+              <p class="publication-authors">Mo Wang*, Wenhao Ye*, <strong class="author-me">Junfeng Xia*</strong>, Minghao Xu, Hongkai Wen, and Quanying Liu.</p>
+              <p class="publication-venue"><strong>ECCV</strong>, 2026. <span class="meta">Co-first author.</span></p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/omni-fmri.png" alt="Omni-fMRI dynamic patching overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://arxiv.org/abs/2601.23090">Omni-fMRI: A Universal Atlas-Free fMRI Foundation Model</a></p>
+              <p class="publication-authors">Mo Wang*, Wenhao Ye*, <strong class="author-me">Junfeng Xia</strong>, Junxiang Zhang, Xuanye Pan, Minghao Xu, Haotian Deng, Hongkai Wen, and Quanying Liu.</p>
+              <p class="publication-venue"><strong>ICML</strong>, 2026.</p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/advanced-materials.png" alt="Ion-gel nanofiber artificial synapse overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://doi.org/10.1002/adma.202419013">Ephaptic Coupling in Ultralow-Power Ion-Gel Nanofiber Artificial Synapses for Enhanced Working Memory</a></p>
+              <p class="publication-authors">Yuanxia Chen, <strong class="author-me">Junfeng Xia</strong>, Youzhi Qu, Hongjie Zhang, Tingting Mei, Xinyi Zhu, Guoheng Xu, Dongyang Li, Li Wang, Quanying Liu, and Kai Xiao.</p>
+              <p class="publication-venue"><strong>Advanced Materials</strong>, 37(16), 2419013, 2025.</p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/uncovering.png" alt="Cognitive taskonomy clustering overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://arxiv.org/abs/2407.00033">Uncovering Cognitive Taskonomy through Transfer Learning in Masked Autoencoder-based fMRI Reconstruction</a></p>
+              <p class="publication-authors">Youzhi Qu*, <strong class="author-me">Junfeng Xia*</strong>, Xinyao Jian, Wendu Li, Kaining Peng, Zhichao Liang, Haiyan Wu, and Quanying Liu.</p>
+              <p class="publication-venue"><strong>HBAI,IJCAI(Oral)</strong>, 35-50, 2024. <span class="meta">Co-first author.</span></p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/beyond.png" alt="Multi-source cognitive task relation graph overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://arxiv.org/abs/2606.26279">Beyond Single-Source Cognitive Taskonomy: Multi-Source Task Relations through fMRI Transfer Learning</a></p>
+              <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Wendu Li, Mengjiao Zhang, and Jie Guo.</p>
+              <p class="publication-venue"><strong>arXiv:2606.26279</strong>, 2026. <span class="meta">First author.</span></p>
+            </div>
+          </article>
+          <article class="publication-card">
+            <figure class="publication-figure">
+              <img src="assets/publications/genetic-algorithms.png" alt="Genetic algorithms for structural brain networks overview" loading="lazy">
+            </figure>
+            <div class="publication-entry">
+              <p class="publication-title"><a href="https://ieeexplore.ieee.org/document/10865371/">A Genetic Algorithms for Optimizing Structural Brain Network Across Cognitive Tasks</a></p>
+              <p class="publication-authors">Youzhi Qu*, Wendu Li*, <strong class="author-me">Junfeng Xia</strong>, Jiahao Tang, Kaining Peng, Zhichao Liang, Haiyan Wu, and Quanying Liu.</p>
+              <p class="publication-venue"><strong>China Automation Congress</strong>, 5210-5215, 2024.</p>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section class="section" id="books">
