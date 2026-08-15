@@ -435,22 +435,12 @@
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
     }
 
-    .publication-placeholder {
-      display: grid;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      place-items: center;
-      border: 1px dashed var(--line);
-      border-radius: 6px;
-      color: var(--soft);
-      background: var(--paper);
-      font-size: 14px;
-      font-weight: 700;
-      text-align: center;
-    }
-
     .publication-entry {
       min-width: 0;
+    }
+
+    .publication-card.text-only {
+      grid-template-columns: 1fr;
     }
 
     .publication-title {
@@ -792,10 +782,7 @@
               <p class="publication-venue"><strong>Under review</strong>.</p>
             </div>
           </article>
-          <article class="publication-card">
-            <figure class="publication-figure">
-              <div class="publication-placeholder">Figure forthcoming</div>
-            </figure>
+          <article class="publication-card text-only">
             <div class="publication-entry">
               <p class="publication-title">Uncovering information hubs in human brain dynamics through prediction-based decomposition</p>
               <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Kaining Peng, Mo Wang, and Quanying Liu.</p>
