@@ -436,6 +436,8 @@
     .publication-figure {
       display: block;
       margin: 0;
+      padding-top: 14px;
+      position: relative;
     }
 
     .publication-figure img {
@@ -447,6 +449,33 @@
       border-radius: 6px;
       background: #ffffff;
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
+    }
+
+    .publication-badge {
+      position: absolute;
+      top: 0;
+      left: 12px;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 14px;
+      border-radius: 6px;
+      color: #ffffff;
+      background: var(--accent);
+      box-shadow: 0 8px 18px rgba(42, 51, 66, 0.18);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .publication-badge.preprint {
+      background: #087f7c;
+    }
+
+    .publication-badge.journal {
+      background: var(--accent-2);
     }
 
     .publication-entry {
@@ -616,7 +645,7 @@
         <div>
           <h1>Junfeng Xia</h1>
           <p class="cn-name">夏俊锋</p>
-          <p class="role">2nd-year M.Sc. Student in Biomedical Engineering<br>Southern University of Science and Technology</p>
+          <p class="role"><strong>2nd-year</strong> M.Sc. Student in Biomedical Engineering<br>Southern University of Science and Technology</p>
         </div>
         <ul class="profile-list">
           <li><span class="icon">#</span><span>Shenzhen, China</span></li>
@@ -635,7 +664,7 @@
       <section class="intro" id="about">
         <h2>About</h2>
         <p class="lead">
-          I am Junfeng Xia (夏俊锋), a 2nd-year master's student in Biomedical Engineering at Southern University of Science and
+          I am Junfeng Xia (夏俊锋), a <strong>2nd-year</strong> master's student in Biomedical Engineering at Southern University of Science and
           Technology, advised by Prof. <a href="https://scholar.google.com/citations?hl=en&amp;user=UpP9hJ8AAAAJ"><strong>Quanying Liu (刘泉影)</strong></a>. I expect to graduate in June 2027 and am applying for
           <strong>Fall 2027 Ph.D. programs</strong>. Before joining SUSTech, I received my B.Eng. in Computer
           Science and Technology from Zhengzhou University, where I was advised by Prof. <a href="https://scholar.google.com/citations?hl=en&amp;user=gcHR3f8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate"><strong>Qidong Liu (刘起东)</strong></a>.
@@ -679,6 +708,7 @@
         <div class="publication-cards">
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge">MICCAI 2026</span>
               <img src="assets/publications/brain-dit.png" alt="Brain-DiT framework overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -689,6 +719,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge preprint">arXiv 2026</span>
               <img src="assets/publications/brainworld.png" alt="BrainWorld framework overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -699,6 +730,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge preprint">arXiv 2025</span>
               <img src="assets/publications/slim-brain.png" alt="SLIM-Brain architecture overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -709,6 +741,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge">ECCV 2026</span>
               <img src="assets/publications/flexibrain.png" alt="FlexiBrain architecture overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -719,6 +752,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge">ICML 2026</span>
               <img src="assets/publications/omni-fmri.png" alt="Omni-fMRI dynamic patching overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -729,6 +763,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge journal">Advanced Materials 2025</span>
               <img src="assets/publications/advanced-materials.png" alt="Ion-gel nanofiber artificial synapse overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -739,6 +774,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge journal">HBAI, IJCAI 2024</span>
               <img src="assets/publications/uncovering.png" alt="Cognitive taskonomy clustering overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -749,6 +785,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge preprint">arXiv 2026</span>
               <img src="assets/publications/beyond.png" alt="Multi-source cognitive task relation graph overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -759,6 +796,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
+              <span class="publication-badge journal">CAC 2024</span>
               <img src="assets/publications/genetic-algorithms.png" alt="Genetic algorithms for structural brain networks overview" loading="lazy">
             </figure>
             <div class="publication-entry">
