@@ -372,6 +372,14 @@
       vertical-align: middle;
     }
 
+    .news-brain-icon {
+      display: inline-block;
+      margin-left: 2px;
+      font-size: 1.05em;
+      line-height: 1;
+      vertical-align: -1px;
+    }
+
     .news-announcement {
       color: var(--ink);
     }
@@ -507,6 +515,14 @@
       font-size: 17px;
       font-weight: 700;
       line-height: 1.42;
+    }
+
+    .brainsaber-title-name {
+      color: #9a6f00;
+    }
+
+    .brainsaber-title-detail {
+      color: #243b78;
     }
 
     .publication-title a {
@@ -722,7 +738,7 @@
       <section class="section" id="news">
         <h2>News</h2>
         <ul class="news-list">
-          <li><span class="news-date">Sep 2026</span><span><img class="news-icon" src="assets/brainsaber-sword.png" alt="" width="18" height="32"><strong>BrainSaber</strong> was released on <strong>arXiv</strong>, introducing an interesting information-theoretic framework for functional brain atlas construction.</span></li>
+          <li><span class="news-date">Sep 2026</span><span><img class="news-icon" src="assets/brainsaber-sword.png" alt="" width="18" height="32"><strong>BrainSaber</strong><span class="news-brain-icon" aria-hidden="true">🧠</span> was released on <strong>arXiv</strong>, introducing an interesting information-theoretic framework for functional brain atlas construction.</span></li>
           <li><span class="news-date">Sep 2026</span><span class="news-announcement">🎉 Our paper <strong>Brain-DiT</strong> was shortlisted at MICCAI 2026 for the <strong class="award-name">Best Paper Award</strong> and <strong class="award-name">Young Scientist Award</strong> <span class="top-percent">TOP 0.5%</span>.</span></li>
           <li><span class="news-date">Jun 2026</span><span><strong>Brain-DiT</strong> was accepted by <strong>MICCAI 2026</strong>. Looking forward to visiting Strasbourg.</span></li>
           <li><span class="news-date">Jun 2026</span><span><strong>BrainWorld</strong> was released on <strong>arXiv</strong>.</span></li>
@@ -765,7 +781,7 @@
               <img src="assets/publications/brainsaber.png" alt="BrainSaber information decomposition framework for functional brain atlas construction" loading="lazy">
             </figure>
             <div class="publication-entry">
-              <p class="publication-title">BrainSaber: Reconstruction-Based Information Decomposition for Functional Brain Atlas Construction</p>
+              <p class="publication-title"><span class="brainsaber-title-name">BrainSaber:</span> <span class="brainsaber-title-detail">Reconstruction-Based Information Decomposition for Functional Brain Atlas Construction</span></p>
               <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Mo Wang, and Quanying Liu.</p>
               <p class="publication-venue"><strong>arXiv</strong>, 2026. <span class="meta">First author.</span></p>
             </div>
