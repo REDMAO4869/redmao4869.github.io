@@ -498,6 +498,12 @@
       background: #087f7c;
     }
 
+    .publication-badge.brainsaber-badge {
+      color: #fffdf4;
+      background: #243b78;
+      box-shadow: inset 0 0 0 1px #d2ae4a, 0 5px 12px rgba(42, 51, 66, 0.14);
+    }
+
     .publication-badge.journal {
       background: var(--accent-2);
     }
@@ -517,12 +523,18 @@
       line-height: 1.42;
     }
 
-    .brainsaber-title-name {
-      color: #9a6f00;
+    .brainsaber-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
     }
 
-    .brainsaber-title-detail {
-      color: #243b78;
+    .brainsaber-title-icon {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 34px;
+      object-fit: contain;
     }
 
     .publication-title a {
@@ -777,11 +789,11 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
-              <span class="publication-badge preprint">arXiv 2026</span>
+              <span class="publication-badge brainsaber-badge">arXiv 2026</span>
               <img src="assets/publications/brainsaber.png" alt="BrainSaber information decomposition framework for functional brain atlas construction" loading="lazy">
             </figure>
             <div class="publication-entry">
-              <p class="publication-title"><span class="brainsaber-title-name">BrainSaber:</span> <span class="brainsaber-title-detail">Reconstruction-Based Information Decomposition for Functional Brain Atlas Construction</span></p>
+              <p class="publication-title brainsaber-title"><img class="brainsaber-title-icon" src="assets/brainsaber-sword.png" alt="" width="18" height="34"><span>BrainSaber: Reconstruction-Based Information Decomposition for Functional Brain Atlas Construction</span></p>
               <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Mo Wang, and Quanying Liu.</p>
               <p class="publication-venue"><strong>arXiv</strong>, 2026. <span class="meta">First author.</span></p>
             </div>
