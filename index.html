@@ -397,26 +397,27 @@
       color: #4d8b57;
     }
 
-    .braindit-name {
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .braindit-brain {
-      color: #c35f7e;
-    }
-
-    .braindit-dit {
-      color: #5b5f66;
-    }
-
-    .braindit-noise-icon {
+    .braindit-logo {
       display: inline-block;
-      width: 18px;
-      height: 18px;
-      margin-left: 4px;
-      object-fit: cover;
-      vertical-align: -4px;
+      width: 118px;
+      height: 24px;
+      margin: 0 4px;
+      overflow: hidden;
+      background: url("assets/brain-dit-logo.png") -6px -7px / 166px 38px no-repeat;
+      border-radius: 4px;
+      vertical-align: -6px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .news-announcement {
@@ -806,8 +807,8 @@
         <h2>News</h2>
         <ul class="news-list">
           <li><span class="news-date">Sep 2026</span><span><strong class="brainsaber-name"><span class="brainsaber-brain">Brain</span><span class="brainsaber-sa">Sab</span><span class="brainsaber-ber">er</span></strong><img class="news-icon" src="assets/brainsaber-sword.png" alt="" width="18" height="32"> was released on <strong>arXiv</strong>. We propose a novel and intriguing reconstruction-based information decomposition method for constructing functional brain atlases.</span></li>
-          <li><span class="news-date">Sep 2026</span><span class="news-announcement">🎉 Our paper <strong class="braindit-name"><span class="braindit-brain">Brain</span>-<span class="braindit-dit">DiT</span></strong><img class="braindit-noise-icon" src="assets/brain-dit-noise.png" alt="" width="18" height="18"> was shortlisted at MICCAI 2026 for the <strong class="award-name">Best Paper Award</strong> and <strong class="award-name">Young Scientist Award</strong> <span class="top-percent">TOP 0.5%</span>.</span></li>
-          <li><span class="news-date">Jun 2026</span><span><strong class="braindit-name"><span class="braindit-brain">Brain</span>-<span class="braindit-dit">DiT</span></strong><img class="braindit-noise-icon" src="assets/brain-dit-noise.png" alt="" width="18" height="18"> was accepted by <strong>MICCAI 2026</strong>. Looking forward to visiting Strasbourg.</span></li>
+          <li><span class="news-date">Sep 2026</span><span class="news-announcement">🎉 Our paper <span class="braindit-logo"><span class="visually-hidden">Brain-DiT</span></span> was shortlisted at MICCAI 2026 for the <strong class="award-name">Best Paper Award</strong> and <strong class="award-name">Young Scientist Award</strong> <span class="top-percent">TOP 0.5%</span>.</span></li>
+          <li><span class="news-date">Jun 2026</span><span><span class="braindit-logo"><span class="visually-hidden">Brain-DiT</span></span> was accepted by <strong>MICCAI 2026</strong>. Looking forward to visiting Strasbourg.</span></li>
           <li><span class="news-date">Jun 2026</span><span><strong class="brainworld-name"><span class="brainworld-brain">Brain</span><span class="brainworld-ocean">Wor</span><span class="brainworld-land">ld</span></strong><span class="brainworld-icon" aria-hidden="true">🌍</span> was released on <strong>arXiv</strong>.</span></li>
           <li><span class="news-date">Jun 2026</span><span><strong>FlexiBrain</strong> was accepted by <strong>ECCV 2026</strong>.</span></li>
           <li><span class="news-date">Apr 2026</span><span><strong>Omni-fMRI</strong> was accepted by <strong>ICML 2026</strong>.</span></li>
@@ -837,7 +838,7 @@
               <img src="assets/publications/brain-dit.png" alt="Brain-DiT framework overview" loading="lazy">
             </figure>
             <div class="publication-entry">
-              <p class="publication-title"><a href="https://arxiv.org/abs/2604.12683"><span class="braindit-name"><span class="braindit-brain">Brain</span>-<span class="braindit-dit">DiT</span></span><img class="braindit-noise-icon" src="assets/brain-dit-noise.png" alt="" width="18" height="18">: A Universal Multi-state fMRI Foundation Model with Metadata-Conditioned Pretraining</a></p>
+              <p class="publication-title"><a href="https://arxiv.org/abs/2604.12683"><span class="braindit-logo"><span class="visually-hidden">Brain-DiT</span></span>: A Universal Multi-state fMRI Foundation Model with Metadata-Conditioned Pretraining</a></p>
               <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Wenhao Ye, Xuanye Pan, Xinke Shen, Mo Wang, and Quanying Liu.</p>
               <p class="publication-venue"><strong>MICCAI 2026</strong> (<strong class="award-name">Best Paper Award</strong> &amp; <strong class="award-name">Young Scientist Award</strong> Shortlist). <span class="meta">First author.</span></p>
             </div>
