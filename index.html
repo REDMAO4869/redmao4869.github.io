@@ -442,6 +442,23 @@
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
     }
 
+    .braindit-animation-figure {
+      max-width: 720px;
+      margin: 18px auto 0;
+    }
+
+    .braindit-animation-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 10 / 11;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
+    }
+
     .tag-row {
       display: flex;
       flex-wrap: wrap;
@@ -661,6 +678,8 @@
       }
 
       .nav-links {
+        width: 100%;
+        min-width: 0;
         justify-content: flex-start;
       }
 
@@ -752,6 +771,7 @@
         <a href="#about">About</a>
         <a href="#news">News</a>
         <a href="#research-line">Research Line</a>
+        <a href="#brain-dit">Brain-DiT</a>
         <a href="#publications">Selected Publications</a>
         <a href="#manuscripts">Manuscripts</a>
         <a href="#books">Books</a>
@@ -825,6 +845,13 @@
         <h2>Research Line</h2>
         <figure class="research-line-figure">
           <img src="assets/research-line.png?v=20260920" alt="Research line overview for unified fMRI foundation models, representation analysis, and multimodal learning" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="section" id="brain-dit">
+        <h2>Brain-DiT</h2>
+        <figure class="braindit-animation-figure">
+          <img src="assets/animations/brain-dit-unified-v5.gif" alt="Animated overview of the unified Brain-DiT framework" loading="lazy" decoding="async">
         </figure>
       </section>
 
