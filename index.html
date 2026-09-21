@@ -443,12 +443,14 @@
     }
 
     .publication-card.braindit-publication-card,
-    .publication-card.brainsaber-publication-card {
+    .publication-card.brainsaber-publication-card,
+    .publication-card.brainworld-publication-card {
       row-gap: 0;
     }
 
     .braindit-publication-animation,
-    .brainsaber-publication-animation {
+    .brainsaber-publication-animation,
+    .brainworld-publication-animation {
       grid-column: 1 / -1;
       width: 100%;
       margin: 0;
@@ -462,7 +464,8 @@
       object-fit: contain;
     }
 
-    .brainsaber-publication-animation img {
+    .brainsaber-publication-animation img,
+    .brainworld-publication-animation img {
       display: block;
       width: 100%;
       height: auto;
@@ -890,7 +893,7 @@
               <img src="assets/animations/brainsaber-framework-en.gif?v=20260921-web" alt="Animated overview of the BrainSaber framework" loading="lazy" decoding="async">
             </figure>
           </article>
-          <article class="publication-card">
+          <article class="publication-card brainworld-publication-card">
             <figure class="publication-figure">
               <span class="publication-badge preprint">arXiv 2026</span>
               <img src="assets/publications/brainworld.png" alt="BrainWorld framework overview" loading="lazy">
@@ -900,6 +903,9 @@
               <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Wenhao Ye, Junxiang Zhang, Xuanye Pan, Mo Wang, and Quanying Liu.</p>
               <p class="publication-venue"><strong>arXiv</strong>, 2026. <span class="meta">First author.</span></p>
             </div>
+            <figure class="brainworld-publication-animation">
+              <img src="assets/animations/brainworld-complete-v7-web.gif?v=20260921" alt="Six-page animated overview of the BrainWorld framework" loading="lazy" decoding="async">
+            </figure>
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
