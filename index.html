@@ -442,12 +442,14 @@
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
     }
 
-    .braindit-animation-figure {
+    .braindit-publication-animation {
+      grid-column: 1 / -1;
+      width: 100%;
       max-width: 720px;
-      margin: 18px auto 0;
+      margin: 10px auto 0;
     }
 
-    .braindit-animation-figure img {
+    .braindit-publication-animation img {
       display: block;
       width: 100%;
       height: auto;
@@ -771,7 +773,6 @@
         <a href="#about">About</a>
         <a href="#news">News</a>
         <a href="#research-line">Research Line</a>
-        <a href="#brain-dit">Brain-DiT</a>
         <a href="#publications">Selected Publications</a>
         <a href="#manuscripts">Manuscripts</a>
         <a href="#books">Books</a>
@@ -848,13 +849,6 @@
         </figure>
       </section>
 
-      <section class="section" id="brain-dit">
-        <h2>Brain-DiT</h2>
-        <figure class="braindit-animation-figure">
-          <img src="assets/animations/brain-dit-unified-v5.gif" alt="Animated overview of the unified Brain-DiT framework" loading="lazy" decoding="async">
-        </figure>
-      </section>
-
       <section class="section" id="publications">
         <h2>Selected Publications</h2>
         <p class="note">* denotes equal contribution.</p>
@@ -869,6 +863,9 @@
               <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Wenhao Ye, Xuanye Pan, Xinke Shen, Mo Wang, and Quanying Liu.</p>
               <p class="publication-venue"><strong>MICCAI 2026</strong> (<strong class="award-name">Best Paper Award</strong> &amp; <strong class="award-name">Young Scientist Award</strong> Shortlist). <span class="meta">First author.</span></p>
             </div>
+            <figure class="braindit-publication-animation">
+              <img src="assets/animations/brain-dit-unified-v5.gif" alt="Animated overview of the unified Brain-DiT framework" loading="lazy" decoding="async">
+            </figure>
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
