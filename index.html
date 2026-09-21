@@ -442,23 +442,22 @@
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
     }
 
+    .publication-card.braindit-publication-card {
+      row-gap: 0;
+    }
+
     .braindit-publication-animation {
       grid-column: 1 / -1;
       width: 100%;
-      max-width: 720px;
-      margin: 10px auto 0;
+      margin: 0;
     }
 
     .braindit-publication-animation img {
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 10 / 11;
+      aspect-ratio: 1;
       object-fit: contain;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #ffffff;
-      box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
     }
 
     .tag-row {
@@ -853,7 +852,7 @@
         <h2>Selected Publications</h2>
         <p class="note">* denotes equal contribution.</p>
         <div class="publication-cards">
-          <article class="publication-card">
+          <article class="publication-card braindit-publication-card">
             <figure class="publication-figure">
               <span class="publication-badge">MICCAI 2026</span>
               <img src="assets/publications/brain-dit.png" alt="Brain-DiT framework overview" loading="lazy">
@@ -864,7 +863,7 @@
               <p class="publication-venue"><strong>MICCAI 2026</strong> (<strong class="award-name">Best Paper Award</strong> &amp; <strong class="award-name">Young Scientist Award</strong> Shortlist). <span class="meta">First author.</span></p>
             </div>
             <figure class="braindit-publication-animation">
-              <img src="assets/animations/brain-dit-unified-v5.gif" alt="Animated overview of the unified Brain-DiT framework" loading="lazy" decoding="async">
+              <img src="assets/animations/brain-dit-unified-v5.gif?v=20260921-crop" alt="Animated overview of the unified Brain-DiT framework" loading="lazy" decoding="async">
             </figure>
           </article>
           <article class="publication-card">
