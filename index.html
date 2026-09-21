@@ -442,11 +442,13 @@
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
     }
 
-    .publication-card.braindit-publication-card {
+    .publication-card.braindit-publication-card,
+    .publication-card.brainsaber-publication-card {
       row-gap: 0;
     }
 
-    .braindit-publication-animation {
+    .braindit-publication-animation,
+    .brainsaber-publication-animation {
       grid-column: 1 / -1;
       width: 100%;
       margin: 0;
@@ -457,6 +459,14 @@
       width: 100%;
       height: auto;
       aspect-ratio: 1;
+      object-fit: contain;
+    }
+
+    .brainsaber-publication-animation img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
       object-fit: contain;
     }
 
@@ -866,7 +876,7 @@
               <img src="assets/animations/brain-dit-unified-v5.gif?v=20260921-crop" alt="Animated overview of the unified Brain-DiT framework" loading="lazy" decoding="async">
             </figure>
           </article>
-          <article class="publication-card">
+          <article class="publication-card brainsaber-publication-card">
             <figure class="publication-figure">
               <span class="publication-badge brainsaber-badge">arXiv 2026</span>
               <img src="assets/publications/brainsaber.png" alt="BrainSaber information decomposition framework for functional brain atlas construction" loading="lazy">
@@ -876,6 +886,9 @@
               <p class="publication-authors"><strong class="author-me">Junfeng Xia</strong>, Mo Wang, and Quanying Liu.</p>
               <p class="publication-venue"><strong>arXiv</strong>, 2026. <span class="meta">First author.</span></p>
             </div>
+            <figure class="brainsaber-publication-animation">
+              <img src="assets/animations/brainsaber-framework-en.gif?v=20260921" alt="Animated overview of the BrainSaber framework" loading="lazy" decoding="async">
+            </figure>
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
