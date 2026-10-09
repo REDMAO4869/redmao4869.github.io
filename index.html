@@ -671,6 +671,96 @@
       gap: 22px;
     }
 
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-heading-row h2 {
+      margin: 0;
+    }
+
+    .gallery-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gallery-counter {
+      min-width: 46px;
+      color: var(--muted);
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+    }
+
+    .gallery-button {
+      display: inline-grid;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: var(--panel);
+      cursor: pointer;
+      font: inherit;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .gallery-button:hover,
+    .gallery-button:focus-visible {
+      border-color: var(--accent);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .gallery-button[data-gallery-toggle] {
+      font-size: 15px;
+    }
+
+    .gallery-viewport {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f5f7fa;
+      box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
+    }
+
+    .gallery-track {
+      display: flex;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      touch-action: pan-x pan-y;
+    }
+
+    .gallery-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-slide {
+      flex: 0 0 100%;
+      margin: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .gallery-slide img {
+      display: block;
+      width: 100%;
+      height: clamp(320px, 48vw, 560px);
+      object-fit: contain;
+      background: #f5f7fa;
+    }
+
     footer {
       padding-top: 26px;
       color: var(--soft);
@@ -741,6 +831,10 @@
         grid-template-columns: 1fr;
         gap: 2px;
       }
+
+      .gallery-slide img {
+        height: clamp(280px, 82vw, 440px);
+      }
     }
 
     @media (max-width: 560px) {
@@ -767,6 +861,19 @@
       .intro h2 {
         font-size: 25px;
       }
+
+      .section-heading-row {
+        align-items: flex-start;
+      }
+
+      .gallery-controls {
+        gap: 5px;
+      }
+
+      .gallery-button {
+        width: 34px;
+        height: 34px;
+      }
     }
   </style>
 </head>
@@ -783,6 +890,7 @@
         <a href="#manuscripts">Manuscripts</a>
         <a href="#books">Books</a>
         <a href="#service">Service</a>
+        <a href="#gallery">Gallery</a>
       </nav>
     </div>
   </header>
@@ -1071,11 +1179,130 @@
         </ul>
       </section>
 
+      <section class="section" id="gallery" data-gallery>
+        <div class="section-heading-row">
+          <h2>Gallery</h2>
+          <div class="gallery-controls" aria-label="Gallery controls">
+            <button class="gallery-button" type="button" data-gallery-prev aria-label="Previous photo" title="Previous photo">‹</button>
+            <button class="gallery-button" type="button" data-gallery-toggle aria-label="Pause slideshow" title="Pause slideshow">Ⅱ</button>
+            <span class="gallery-counter" data-gallery-counter aria-live="polite">1 / 6</span>
+            <button class="gallery-button" type="button" data-gallery-next aria-label="Next photo" title="Next photo">›</button>
+          </div>
+        </div>
+        <div class="gallery-viewport">
+          <div class="gallery-track" data-gallery-track tabindex="0" aria-label="Academic and lab photo gallery">
+            <figure class="gallery-slide">
+              <img src="assets/gallery/miccai-2026-poster.jpg" alt="Junfeng Xia presenting the Brain-DiT poster at MICCAI 2026" loading="lazy" decoding="async">
+            </figure>
+            <figure class="gallery-slide">
+              <img src="assets/gallery/lab-outing.jpg" alt="Research group outing under a blue sky" loading="lazy" decoding="async">
+            </figure>
+            <figure class="gallery-slide">
+              <img src="assets/gallery/croucher-summer-course.jpg" alt="Participants at the Croucher Summer Course at the Chinese University of Hong Kong" loading="lazy" decoding="async">
+            </figure>
+            <figure class="gallery-slide">
+              <img src="assets/gallery/ncc-lab-gathering.jpg" alt="NCC Lab gathering" loading="lazy" decoding="async">
+            </figure>
+            <figure class="gallery-slide">
+              <img src="assets/gallery/table-tennis.jpg" alt="A collection of table tennis paddles arranged around a ball" loading="lazy" decoding="async">
+            </figure>
+            <figure class="gallery-slide">
+              <img src="assets/gallery/lab-dinner.jpg" alt="Lab members sharing a meal together" loading="lazy" decoding="async">
+            </figure>
+          </div>
+        </div>
+      </section>
+
       <footer>
         <p>Last updated: 2026.</p>
       </footer>
     </div>
   </main>
+  <script>
+    (() => {
+      const gallery = document.querySelector("[data-gallery]");
+      if (!gallery) return;
+
+      const track = gallery.querySelector("[data-gallery-track]");
+      const slides = Array.from(track.children);
+      const previousButton = gallery.querySelector("[data-gallery-prev]");
+      const nextButton = gallery.querySelector("[data-gallery-next]");
+      const toggleButton = gallery.querySelector("[data-gallery-toggle]");
+      const counter = gallery.querySelector("[data-gallery-counter]");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let currentIndex = 0;
+      let timer = null;
+      let scrollTimer = null;
+      let userPaused = reducedMotion.matches;
+
+      const updateControls = () => {
+        counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+        toggleButton.textContent = userPaused ? "▶" : "Ⅱ";
+        toggleButton.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
+        toggleButton.title = userPaused ? "Play slideshow" : "Pause slideshow";
+      };
+
+      const stopAutoPlay = () => {
+        window.clearInterval(timer);
+        timer = null;
+      };
+
+      const startAutoPlay = () => {
+        stopAutoPlay();
+        if (userPaused || reducedMotion.matches) return;
+        timer = window.setInterval(() => goTo(currentIndex + 1), 5000);
+      };
+
+      const goTo = (nextIndex, smooth = true) => {
+        currentIndex = (nextIndex + slides.length) % slides.length;
+        track.scrollTo({
+          left: currentIndex * track.clientWidth,
+          behavior: smooth ? "smooth" : "auto"
+        });
+        updateControls();
+      };
+
+      const handleManualMove = (direction) => {
+        goTo(currentIndex + direction);
+        startAutoPlay();
+      };
+
+      previousButton.addEventListener("click", () => handleManualMove(-1));
+      nextButton.addEventListener("click", () => handleManualMove(1));
+      toggleButton.addEventListener("click", () => {
+        userPaused = !userPaused;
+        updateControls();
+        startAutoPlay();
+      });
+
+      track.addEventListener("scroll", () => {
+        window.clearTimeout(scrollTimer);
+        scrollTimer = window.setTimeout(() => {
+          currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+          updateControls();
+        }, 80);
+      }, { passive: true });
+
+      gallery.addEventListener("pointerenter", stopAutoPlay);
+      gallery.addEventListener("pointerleave", startAutoPlay);
+      gallery.addEventListener("focusin", stopAutoPlay);
+      gallery.addEventListener("focusout", (event) => {
+        if (!gallery.contains(event.relatedTarget)) startAutoPlay();
+      });
+      window.addEventListener("resize", () => goTo(currentIndex, false));
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) stopAutoPlay();
+        else startAutoPlay();
+      });
+      reducedMotion.addEventListener("change", () => {
+        if (reducedMotion.matches) stopAutoPlay();
+        else startAutoPlay();
+      });
+
+      updateControls();
+      startAutoPlay();
+    })();
+  </script>
 </body>
 </html>
 
