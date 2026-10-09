@@ -689,14 +689,6 @@
       gap: 8px;
     }
 
-    .gallery-counter {
-      min-width: 46px;
-      color: var(--muted);
-      font-size: 14px;
-      font-variant-numeric: tabular-nums;
-      text-align: center;
-    }
-
     .gallery-button {
       display: inline-grid;
       width: 36px;
@@ -720,10 +712,6 @@
       outline: none;
     }
 
-    .gallery-button[data-gallery-toggle] {
-      font-size: 15px;
-    }
-
     .gallery-viewport {
       overflow: hidden;
       border: 1px solid var(--line);
@@ -732,33 +720,61 @@
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
     }
 
-    .gallery-track {
+    .gallery-marquee {
       display: flex;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-behavior: smooth;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      touch-action: pan-x pan-y;
+      width: max-content;
+      animation: gallery-marquee 56s linear infinite;
+      will-change: transform;
     }
 
-    .gallery-track::-webkit-scrollbar {
-      display: none;
+    .gallery-viewport:hover .gallery-marquee,
+    .gallery-viewport:focus-within .gallery-marquee,
+    .gallery-marquee.is-paused {
+      animation-play-state: paused;
     }
 
-    .gallery-slide {
-      flex: 0 0 100%;
+    .gallery-strip {
+      display: flex;
+      flex: none;
+      gap: 10px;
+      padding-right: 10px;
+    }
+
+    .gallery-tile {
+      flex: none;
+      height: 340px;
       margin: 0;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
+      overflow: hidden;
+      background: #f5f7fa;
     }
 
-    .gallery-slide img {
+    .gallery-tile img {
       display: block;
-      width: 100%;
-      height: clamp(320px, 48vw, 560px);
-      object-fit: contain;
+      width: auto;
+      max-width: none;
+      height: 100%;
+      object-fit: cover;
       background: #f5f7fa;
+    }
+
+    @keyframes gallery-marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-viewport {
+        overflow-x: auto;
+      }
+
+      .gallery-marquee {
+        animation: none;
+      }
     }
 
     footer {
@@ -832,8 +848,8 @@
         gap: 2px;
       }
 
-      .gallery-slide img {
-        height: clamp(280px, 82vw, 440px);
+      .gallery-tile {
+        height: 260px;
       }
     }
 
@@ -864,10 +880,6 @@
 
       .section-heading-row {
         align-items: flex-start;
-      }
-
-      .gallery-controls {
-        gap: 5px;
       }
 
       .gallery-button {
@@ -1183,32 +1195,37 @@
         <div class="section-heading-row">
           <h2>Gallery</h2>
           <div class="gallery-controls" aria-label="Gallery controls">
-            <button class="gallery-button" type="button" data-gallery-prev aria-label="Previous photo" title="Previous photo">‹</button>
-            <button class="gallery-button" type="button" data-gallery-toggle aria-label="Pause slideshow" title="Pause slideshow">Ⅱ</button>
-            <span class="gallery-counter" data-gallery-counter aria-live="polite">1 / 6</span>
-            <button class="gallery-button" type="button" data-gallery-next aria-label="Next photo" title="Next photo">›</button>
+            <button class="gallery-button" type="button" data-gallery-toggle aria-label="Pause gallery" title="Pause gallery">Ⅱ</button>
           </div>
         </div>
         <div class="gallery-viewport">
-          <div class="gallery-track" data-gallery-track tabindex="0" aria-label="Academic and lab photo gallery">
-            <figure class="gallery-slide">
-              <img src="assets/gallery/miccai-2026-poster.jpg" alt="Junfeng Xia presenting the Brain-DiT poster at MICCAI 2026" loading="lazy" decoding="async">
-            </figure>
-            <figure class="gallery-slide">
-              <img src="assets/gallery/lab-outing.jpg" alt="Research group outing under a blue sky" loading="lazy" decoding="async">
-            </figure>
-            <figure class="gallery-slide">
-              <img src="assets/gallery/croucher-summer-course.jpg" alt="Participants at the Croucher Summer Course at the Chinese University of Hong Kong" loading="lazy" decoding="async">
-            </figure>
-            <figure class="gallery-slide">
-              <img src="assets/gallery/ncc-lab-gathering.jpg" alt="NCC Lab gathering" loading="lazy" decoding="async">
-            </figure>
-            <figure class="gallery-slide">
-              <img src="assets/gallery/table-tennis.jpg" alt="A collection of table tennis paddles arranged around a ball" loading="lazy" decoding="async">
-            </figure>
-            <figure class="gallery-slide">
-              <img src="assets/gallery/lab-dinner.jpg" alt="Lab members sharing a meal together" loading="lazy" decoding="async">
-            </figure>
+          <div class="gallery-marquee" data-gallery-marquee aria-label="Academic and lab photo gallery">
+            <div class="gallery-strip" data-gallery-strip>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/miccai-2026-poster.jpg" alt="Junfeng Xia presenting the Brain-DiT poster at MICCAI 2026" width="3258" height="3273" loading="lazy" decoding="async">
+              </figure>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/lab-outing.jpg" alt="Research group outing under a blue sky" width="3024" height="4032" loading="lazy" decoding="async">
+              </figure>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/croucher-summer-course.jpg" alt="Participants at the Croucher Summer Course at the Chinese University of Hong Kong" width="1440" height="1080" loading="lazy" decoding="async">
+              </figure>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/ncc-lab-gathering.jpg" alt="NCC Lab gathering" width="1706" height="1279" loading="lazy" decoding="async">
+              </figure>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/table-tennis-friends.jpg" alt="Illustrated portrait of four friends at a table tennis gathering" width="1024" height="1536" loading="lazy" decoding="async">
+              </figure>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/table-tennis.jpg" alt="A collection of table tennis paddles arranged around a ball" width="1280" height="1280" loading="lazy" decoding="async">
+              </figure>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/friends-dinner.jpg" alt="Friends sharing dinner together" width="2275" height="1280" loading="lazy" decoding="async">
+              </figure>
+              <figure class="gallery-tile">
+                <img src="assets/gallery/lab-dinner.jpg" alt="Lab members sharing a meal together" width="1706" height="1279" loading="lazy" decoding="async">
+              </figure>
+            </div>
           </div>
         </div>
       </section>
@@ -1223,84 +1240,33 @@
       const gallery = document.querySelector("[data-gallery]");
       if (!gallery) return;
 
-      const track = gallery.querySelector("[data-gallery-track]");
-      const slides = Array.from(track.children);
-      const previousButton = gallery.querySelector("[data-gallery-prev]");
-      const nextButton = gallery.querySelector("[data-gallery-next]");
+      const marquee = gallery.querySelector("[data-gallery-marquee]");
+      const strip = gallery.querySelector("[data-gallery-strip]");
       const toggleButton = gallery.querySelector("[data-gallery-toggle]");
-      const counter = gallery.querySelector("[data-gallery-counter]");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-      let currentIndex = 0;
-      let timer = null;
-      let scrollTimer = null;
       let userPaused = reducedMotion.matches;
 
-      const updateControls = () => {
-        counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+      const duplicate = strip.cloneNode(true);
+      duplicate.removeAttribute("data-gallery-strip");
+      duplicate.setAttribute("aria-hidden", "true");
+      duplicate.querySelectorAll("img").forEach((image) => image.alt = "");
+      marquee.append(duplicate);
+
+      const updateMotion = () => {
+        const paused = userPaused || reducedMotion.matches || document.hidden;
+        marquee.classList.toggle("is-paused", paused);
         toggleButton.textContent = userPaused ? "▶" : "Ⅱ";
-        toggleButton.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
-        toggleButton.title = userPaused ? "Play slideshow" : "Pause slideshow";
+        toggleButton.setAttribute("aria-label", userPaused ? "Play gallery" : "Pause gallery");
+        toggleButton.title = userPaused ? "Play gallery" : "Pause gallery";
       };
 
-      const stopAutoPlay = () => {
-        window.clearInterval(timer);
-        timer = null;
-      };
-
-      const startAutoPlay = () => {
-        stopAutoPlay();
-        if (userPaused || reducedMotion.matches) return;
-        timer = window.setInterval(() => goTo(currentIndex + 1), 5000);
-      };
-
-      const goTo = (nextIndex, smooth = true) => {
-        currentIndex = (nextIndex + slides.length) % slides.length;
-        track.scrollTo({
-          left: currentIndex * track.clientWidth,
-          behavior: smooth ? "smooth" : "auto"
-        });
-        updateControls();
-      };
-
-      const handleManualMove = (direction) => {
-        goTo(currentIndex + direction);
-        startAutoPlay();
-      };
-
-      previousButton.addEventListener("click", () => handleManualMove(-1));
-      nextButton.addEventListener("click", () => handleManualMove(1));
       toggleButton.addEventListener("click", () => {
         userPaused = !userPaused;
-        updateControls();
-        startAutoPlay();
+        updateMotion();
       });
-
-      track.addEventListener("scroll", () => {
-        window.clearTimeout(scrollTimer);
-        scrollTimer = window.setTimeout(() => {
-          currentIndex = Math.round(track.scrollLeft / track.clientWidth);
-          updateControls();
-        }, 80);
-      }, { passive: true });
-
-      gallery.addEventListener("pointerenter", stopAutoPlay);
-      gallery.addEventListener("pointerleave", startAutoPlay);
-      gallery.addEventListener("focusin", stopAutoPlay);
-      gallery.addEventListener("focusout", (event) => {
-        if (!gallery.contains(event.relatedTarget)) startAutoPlay();
-      });
-      window.addEventListener("resize", () => goTo(currentIndex, false));
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) stopAutoPlay();
-        else startAutoPlay();
-      });
-      reducedMotion.addEventListener("change", () => {
-        if (reducedMotion.matches) stopAutoPlay();
-        else startAutoPlay();
-      });
-
-      updateControls();
-      startAutoPlay();
+      document.addEventListener("visibilitychange", updateMotion);
+      reducedMotion.addEventListener("change", updateMotion);
+      updateMotion();
     })();
   </script>
 </body>
