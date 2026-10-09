@@ -1243,6 +1243,18 @@
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       let userPaused = reducedMotion.matches;
 
+      gallery.addEventListener("error", (event) => {
+        const failedImage = event.target;
+        if (!(failedImage instanceof HTMLImageElement)) return;
+
+        const failedSource = failedImage.getAttribute("src");
+        gallery.querySelectorAll("img").forEach((image) => {
+          if (image.getAttribute("src") === failedSource) {
+            image.closest(".gallery-tile")?.remove();
+          }
+        });
+      }, true);
+
       const duplicate = strip.cloneNode(true);
       duplicate.removeAttribute("data-gallery-strip");
       duplicate.setAttribute("aria-hidden", "true");
