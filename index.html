@@ -135,7 +135,7 @@
 
     .shell {
       display: grid;
-      grid-template-columns: 360px minmax(0, 1fr);
+      grid-template-columns: clamp(340px, 28vw, 400px) minmax(0, 1fr);
       gap: 48px;
       width: min(1440px, calc(100% - 32px));
       margin: 0 auto;
