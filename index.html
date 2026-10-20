@@ -131,15 +131,16 @@
       --mascot-shift-x: 0px;
       --mascot-shift-y: 0px;
       --mascot-tilt: 0deg;
+      --mascot-scale: 1;
       position: fixed;
       left: 14px;
       bottom: 0;
       z-index: 26;
-      width: 344px;
-      height: 244px;
+      width: 332px;
+      height: 250px;
       pointer-events: none;
       transform-origin: left bottom;
-      transform: translate3d(var(--mascot-shift-x), var(--mascot-shift-y), 0) rotate(var(--mascot-tilt));
+      transform: translate3d(var(--mascot-shift-x), var(--mascot-shift-y), 0) rotate(var(--mascot-tilt)) scale(var(--mascot-scale));
       transition: transform 260ms cubic-bezier(0.2, 0.75, 0.3, 1);
       isolation: isolate;
     }
@@ -173,18 +174,18 @@
       display: block;
       width: auto;
       max-width: none;
-      height: 238px;
+      height: 244px;
       filter: drop-shadow(0 8px 10px rgba(42, 51, 66, 0.13));
     }
 
     .mascot-sign {
       position: absolute;
-      left: 116px;
-      bottom: 130px;
+      left: 105px;
+      bottom: 134px;
       z-index: 1;
       display: block;
-      width: 198px;
-      padding: 13px 15px 12px;
+      width: 208px;
+      padding: 14px 15px 13px;
       border: 2px solid #747b66;
       border-radius: 5px;
       color: #33382f;
@@ -192,7 +193,7 @@
       box-shadow: 0 8px 18px rgba(42, 51, 66, 0.13);
       pointer-events: auto;
       transform: rotate(-1.3deg);
-      font-size: 13.5px;
+      font-size: 14px;
       line-height: 1.35;
       text-align: center;
       text-decoration: none;
@@ -216,7 +217,7 @@
       display: block;
       margin-top: 2px;
       color: var(--accent);
-      font-size: 17px;
+      font-size: 18px;
     }
 
     .mascot-sign:hover,
@@ -229,6 +230,10 @@
 
     .ambient-motion-paused .mascot-pair {
       animation-play-state: paused;
+    }
+
+    .mascot-corner.mascot-no-room {
+      display: none;
     }
 
     @keyframes mascot-idle-wave {
@@ -979,6 +984,30 @@
       font-size: 14px;
     }
 
+    @media (min-width: 1600px) {
+      .mascot-corner {
+        --mascot-scale: 1.08;
+      }
+    }
+
+    @media (min-width: 1900px) {
+      .mascot-corner {
+        --mascot-scale: 1.25;
+      }
+    }
+
+    @media (min-width: 2400px) {
+      .mascot-corner {
+        --mascot-scale: 1.35;
+      }
+    }
+
+    @media (max-width: 1500px) and (max-height: 900px) {
+      .mascot-corner {
+        display: none;
+      }
+    }
+
     @media (max-width: 860px) {
       .mascot-corner {
         display: none;
@@ -1512,12 +1541,25 @@
       const stage = document.querySelector(".neural-stage");
       const toggle = document.querySelector("#background-motion-toggle");
       const mascot = document.querySelector(".mascot-corner");
+      const mascotSign = document.querySelector(".mascot-sign");
+      const shell = document.querySelector(".shell");
       if (!canvas || !stage || !toggle) return;
 
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       let userPaused = null;
       let pageHidden = document.hidden;
       let animationFrame = 0;
+
+      const updateMascotLayout = () => {
+        if (!mascot || !shell) return;
+        const preferredScale = window.innerWidth >= 2400 ? 1.35 : window.innerWidth >= 1900 ? 1.25 : window.innerWidth >= 1600 ? 1.08 : 1;
+        const availableGutter = shell.getBoundingClientRect().left - mascot.offsetLeft - 24;
+        const visualWidth = mascotSign ? mascotSign.offsetLeft + mascotSign.offsetWidth : mascot.offsetWidth;
+        const fittedScale = Math.min(preferredScale, availableGutter / visualWidth);
+        const hasRoom = fittedScale >= 0.82;
+        mascot.classList.toggle("mascot-no-room", !hasRoom);
+        mascot.style.setProperty("--mascot-scale", Math.max(0.82, fittedScale).toFixed(3));
+      };
 
       const isPaused = () => pageHidden || (userPaused ?? reducedMotion.matches);
       const updateButton = () => {
@@ -1534,6 +1576,11 @@
       };
 
       updateButton();
+      updateMascotLayout();
+      window.requestAnimationFrame(updateMascotLayout);
+      window.addEventListener("load", updateMascotLayout, { once: true });
+      document.fonts?.ready.then(updateMascotLayout);
+      window.addEventListener("resize", updateMascotLayout, { passive: true });
 
       import("https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js")
         .then((THREE) => {
