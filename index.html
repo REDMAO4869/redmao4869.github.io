@@ -451,6 +451,7 @@
     }
 
     .content {
+      position: relative;
       min-width: 0;
       padding: 28px 34px 40px;
       border-right: 1px solid var(--line);
@@ -493,9 +494,9 @@
 
     @media (min-width: 1800px) {
       .intro-brain {
-        position: fixed;
-        top: 150px;
-        right: 18px;
+        position: absolute;
+        top: 32px;
+        right: calc((1440px - 100vw) / 2 + 18px);
         z-index: 2;
         display: block;
         float: none;
