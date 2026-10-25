@@ -1,0 +1,9 @@
+Asset: MRI-derived human brain atlas GLB
+File: brain-atlas.glb
+Asset source: https://github.com/StarKnightt/brain-explorer/blob/master/public/models/brain-atlas.glb
+Provenance source: https://github.com/StarKnightt/brain-explorer/blob/master/public/models/brain-atlas.provenance.json
+Underlying dataset: OpenNeuro ds006128, subject sub-01, snapshot 1.0.11
+Dataset DOI: https://doi.org/10.18112/openneuro.ds006128.v1.0.11
+Dataset license: CC0 1.0 Universal
+Transformations: MRI-derived FreeSurfer pial surfaces and selected aseg structures were reoriented, cleaned, decimated, annotated, and packaged as GLB. Exact transforms, source checksums, mesh counts, and generated-asset checksum are recorded in brain-atlas.provenance.json.
+Downloaded: 2026-10-26

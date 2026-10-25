@@ -27,6 +27,14 @@
   <meta name="twitter:description" content="Academic homepage of Junfeng Xia (夏俊锋), an M.Sc. student at SUSTech interested in neuroscience representation learning and applying for Fall 2027 Ph.D. programs.">
   <meta name="twitter:image" content="https://redmao4869.github.io/assets/profile-lighthouse-crab.png">
   <meta name="twitter:image:alt" content="Pixel fox resting in a boat beneath a lighthouse at night">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+      }
+    }
+  </script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="2b5f8657-4826-45c9-9a0d-40c84a0e6112"></script>
   <script type="application/ld+json">
     {
@@ -459,43 +467,40 @@
     .intro-brain {
       display: none;
       float: right;
-      width: clamp(170px, 20vw, 230px);
-      height: auto;
-      margin: 2px 0 18px 26px;
-      opacity: 0.9;
-      filter: brightness(0.94) saturate(1.05) drop-shadow(0 12px 18px rgba(190, 34, 28, 0.17));
-      transform-origin: center;
-      animation: intro-brain-float 7.2s ease-in-out infinite;
-      will-change: filter, transform;
+      width: clamp(190px, 21vw, 250px);
+      aspect-ratio: 1.16;
+      margin: -2px 0 16px 24px;
+      opacity: 1;
+      background: transparent;
+      filter: drop-shadow(0 16px 24px rgba(32, 35, 38, 0.22)) drop-shadow(0 0 16px rgba(255, 32, 18, 0.22));
+      pointer-events: none;
+      transition: opacity 260ms ease;
     }
 
-    .ambient-motion-paused .intro-brain {
-      animation-play-state: paused;
+    .intro-brain.brain-model-hidden {
+      opacity: 0;
     }
 
-    @keyframes intro-brain-float {
-      0%, 100% {
-        filter: brightness(0.9) saturate(0.95) drop-shadow(0 12px 18px rgba(176, 28, 24, 0.14));
-        transform: perspective(720px) translateY(0) rotateX(-1deg) rotateY(-10deg) rotateZ(-0.7deg);
-      }
-
-      26% {
-        filter: brightness(1.16) saturate(1.3) drop-shadow(0 15px 24px rgba(226, 37, 29, 0.29));
-      }
-
-      50% {
-        filter: brightness(0.98) saturate(1.08) drop-shadow(0 14px 21px rgba(198, 30, 25, 0.2));
-        transform: perspective(720px) translateY(-8px) rotateX(1.5deg) rotateY(10deg) rotateZ(0.8deg);
-      }
-
-      76% {
-        filter: brightness(1.2) saturate(1.34) drop-shadow(0 16px 25px rgba(235, 47, 34, 0.31));
-      }
+    .intro-brain.brain-model-fallback {
+      background: transparent url("assets/medical-brain-red.webp?v=20261026") center / contain no-repeat;
     }
 
     @media (min-width: 861px) and (max-width: 1799px) {
       .intro-brain {
         display: block;
+      }
+    }
+
+    @media (min-width: 1800px) {
+      .intro-brain {
+        position: fixed;
+        top: 150px;
+        right: 18px;
+        z-index: 2;
+        display: block;
+        float: none;
+        width: clamp(210px, calc((100vw - 1440px) / 2 - 14px), 340px);
+        margin: 0;
       }
     }
 
@@ -1250,7 +1255,7 @@
     <div class="content">
       <section class="intro" id="about">
         <h2>About</h2>
-        <img class="intro-brain" src="assets/medical-brain-red.webp?v=20261026" alt="" aria-hidden="true">
+        <canvas class="intro-brain" id="brain-model-canvas" aria-hidden="true"></canvas>
         <p class="lead">
           I am Junfeng Xia (夏俊锋), a master's student in Biomedical Engineering at Southern University of Science and
           Technology, advised by Prof. <a href="https://scholar.google.com/citations?hl=en&amp;user=UpP9hJ8AAAAJ"><strong>Quanying Liu (刘泉影)</strong></a>. I expect to graduate in June 2027 and am applying for
@@ -1595,12 +1600,13 @@
   <script type="module">
     (() => {
       const canvas = document.querySelector("#neural-background");
+      const brainCanvas = document.querySelector("#brain-model-canvas");
       const stage = document.querySelector(".neural-stage");
       const toggle = document.querySelector("#background-motion-toggle");
       const mascot = document.querySelector(".mascot-corner");
       const mascotSign = document.querySelector(".mascot-sign");
       const shell = document.querySelector(".shell");
-      if (!canvas || !stage || !toggle) return;
+      if (!canvas || !brainCanvas || !stage || !toggle) return;
 
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       let userPaused = null;
@@ -1639,8 +1645,11 @@
       document.fonts?.ready.then(updateMascotLayout);
       window.addEventListener("resize", updateMascotLayout, { passive: true });
 
-      import("https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js")
-        .then((THREE) => {
+      Promise.all([
+        import("three"),
+        import("three/addons/loaders/GLTFLoader.js")
+      ])
+        .then(([THREE, { GLTFLoader }]) => {
           const renderer = new THREE.WebGLRenderer({
             canvas,
             antialias: true,
@@ -1656,81 +1665,305 @@
           const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
           camera.position.set(0, 0, 11);
 
+          const brainRenderer = new THREE.WebGLRenderer({
+            canvas: brainCanvas,
+            antialias: true,
+            alpha: true,
+            powerPreference: "low-power"
+          });
+          brainRenderer.setClearColor(0x000000, 0);
+          brainRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+          brainRenderer.outputColorSpace = THREE.SRGBColorSpace;
+          brainRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+          brainRenderer.toneMappingExposure = 0.92;
+
+          const brainScene = new THREE.Scene();
+          const brainCamera = new THREE.PerspectiveCamera(32, 1, 0.01, 100);
+          brainCamera.position.set(0, 0.05, 5.25);
+
           const brain = new THREE.Group();
-          const brainPlaneWidth = 4.2;
           const aboutSection = document.querySelector("#about");
-          scene.add(brain);
+          brainScene.add(brain);
 
-          const brainTextureLoader = new THREE.TextureLoader();
-          brainTextureLoader.load("assets/medical-brain-red.webp?v=20261026", (brainTexture) => {
-            brainTexture.colorSpace = THREE.SRGBColorSpace;
-            brainTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+          brainScene.add(new THREE.HemisphereLight(0xffffff, 0x202326, 1.55));
+          const brainKeyLight = new THREE.DirectionalLight(0xffffff, 3.1);
+          brainKeyLight.position.set(3.2, 4.3, 5.4);
+          brainScene.add(brainKeyLight);
+          const brainRimLight = new THREE.DirectionalLight(0xd9dde0, 1.7);
+          brainRimLight.position.set(-4.2, 1.2, -3.2);
+          brainScene.add(brainRimLight);
+          const brainSignalLight = new THREE.PointLight(0xff1708, 2.7, 8);
+          brainSignalLight.position.set(1.7, 0.4, 2.5);
+          brainScene.add(brainSignalLight);
+          const brainSignalLightBack = new THREE.PointLight(0xff2a12, 1.8, 7);
+          brainSignalLightBack.position.set(-1.8, -0.35, -2.2);
+          brainScene.add(brainSignalLightBack);
 
-            const source = brainTexture.image;
-            const aspect = (source.naturalWidth || source.width) / (source.naturalHeight || source.height);
-            const planeWidth = brainPlaneWidth;
-            const planeHeight = planeWidth / aspect;
-            const planeGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight, 36, 28);
-            const planePositions = planeGeometry.attributes.position;
-            for (let index = 0; index < planePositions.count; index += 1) {
-              const normalizedX = planePositions.getX(index) / (planeWidth * 0.5);
-              const normalizedY = planePositions.getY(index) / (planeHeight * 0.5);
-              const dome = Math.max(0, 1 - normalizedX * normalizedX - normalizedY * normalizedY);
-              planePositions.setZ(index, Math.sqrt(dome) * 0.17);
-            }
-            planePositions.needsUpdate = true;
-            planeGeometry.computeVertexNormals();
-            const baseMaterial = new THREE.MeshBasicMaterial({
-              map: brainTexture,
-              transparent: true,
-              opacity: 0.9,
-              alphaTest: 0.015,
-              depthWrite: false,
-              side: THREE.DoubleSide
+          let brainReady = false;
+          let brainIsVisible = false;
+          let brainLoadedAt = performance.now() / 1000;
+          let brainSignalPointMaterial = null;
+          let brainSignalHaloMaterial = null;
+          let brainSignalLineMaterial = null;
+          const brainCortexMaterials = [];
+          const brainSignalHotspots = [];
+          brainCanvas.classList.add("brain-model-hidden");
+
+          const gltfLoader = new GLTFLoader();
+          gltfLoader.load("assets/models/brain-atlas.glb?v=20261026", (gltf) => {
+            const model = gltf.scene;
+            const modelBox = new THREE.Box3().setFromObject(model);
+            const modelSize = modelBox.getSize(new THREE.Vector3());
+            const modelCenter = modelBox.getCenter(new THREE.Vector3());
+            const modelHolder = new THREE.Group();
+            const longestSide = Math.max(modelSize.x, modelSize.y, modelSize.z);
+
+            model.position.sub(modelCenter);
+            modelHolder.add(model);
+            modelHolder.scale.setScalar(3.2 / longestSide);
+            brain.add(modelHolder);
+
+            const brainMeshes = [];
+            const visibleMeshNames = new Set(["unified-cortex", "cerebellum", "brain-stem"]);
+            model.traverse((child) => {
+              if (!child.isMesh) return;
+              const meshName = child.name.toLowerCase();
+              if (!visibleMeshNames.has(meshName)) {
+                child.visible = false;
+                return;
+              }
+
+              child.visible = true;
+              child.geometry.computeVertexNormals();
+              const isCerebellum = meshName.includes("cerebell");
+              const isBrainstem = meshName.includes("pons") || meshName.includes("medulla") || meshName.includes("stem");
+              const material = new THREE.MeshStandardMaterial({
+                color: isCerebellum ? 0x484c50 : isBrainstem ? 0x55595d : 0x74797e,
+                emissive: 0x090a0b,
+                emissiveIntensity: 0.08,
+                roughness: 0.54,
+                metalness: 0.08
+              });
+              if (meshName === "unified-cortex" && child.geometry.getAttribute("_curvature")) {
+                material.onBeforeCompile = (shader) => {
+                  shader.uniforms.brainTime = { value: 0 };
+                  shader.vertexShader = shader.vertexShader
+                    .replace(
+                      "#include <common>",
+                      "#include <common>\nattribute float _curvature;\nvarying float vBrainCurvature;\nvarying vec3 vBrainPosition;"
+                    )
+                    .replace(
+                      "#include <begin_vertex>",
+                      "#include <begin_vertex>\nvBrainCurvature = _curvature;\nvBrainPosition = position;"
+                    );
+                  shader.fragmentShader = shader.fragmentShader
+                    .replace(
+                      "#include <common>",
+                      "#include <common>\nuniform float brainTime;\nvarying float vBrainCurvature;\nvarying vec3 vBrainPosition;"
+                    )
+                    .replace(
+                      "#include <emissivemap_fragment>",
+                      `#include <emissivemap_fragment>
+                      float sulcus = smoothstep(0.07, 0.34, -vBrainCurvature);
+                      float activityA = 0.5 + 0.5 * sin(brainTime * 1.45 + vBrainPosition.x * 0.052 - vBrainPosition.y * 0.031);
+                      float activityB = 0.5 + 0.5 * sin(brainTime * 1.08 - vBrainPosition.z * 0.061 + vBrainPosition.y * 0.024);
+                      float travelingSignal = smoothstep(0.34, 0.92, activityA * activityB);
+                      float redSignal = sulcus * (0.025 + travelingSignal * 1.42);
+                      diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.42, 0.025, 0.012), clamp(redSignal * 0.54, 0.0, 0.76));
+                      totalEmissiveRadiance += vec3(1.0, 0.012, 0.002) * redSignal * 4.6;`
+                    );
+                  material.userData.shader = shader;
+                };
+                material.customProgramCacheKey = () => "brain-cortex-curvature-v1";
+                brainCortexMaterials.push(material);
+              }
+              child.material = material;
+              brainMeshes.push(child);
             });
-            const basePlane = new THREE.Mesh(planeGeometry, baseMaterial);
-            brain.add(basePlane);
 
-            const activityMaterial = new THREE.ShaderMaterial({
-              uniforms: {
-                brainMap: { value: brainTexture },
-                time: { value: 0 }
-              },
+            brain.updateMatrixWorld(true);
+            const pointPositions = [];
+            const pointPhases = [];
+            const linePositions = [];
+            const linePhases = [];
+            const vertex = new THREE.Vector3();
+            const edgeStart = new THREE.Vector3();
+            const edgeEnd = new THREE.Vector3();
+
+            brainMeshes.forEach((mesh, meshIndex) => {
+              const positions = mesh.geometry.attributes.position;
+              const isCortex = mesh.name.toLowerCase() === "unified-cortex";
+              const curvature = mesh.geometry.getAttribute("_curvature");
+              const pointTarget = isCortex ? 920 : 230;
+              const pointStep = Math.max(1, Math.floor(positions.count / pointTarget));
+              for (let index = meshIndex % pointStep; index < positions.count; index += pointStep) {
+                if (isCortex && curvature && -curvature.getX(index) < 0.09) continue;
+                vertex.fromBufferAttribute(positions, index).applyMatrix4(mesh.matrixWorld);
+                pointPositions.push(vertex.x, vertex.y, vertex.z);
+                pointPhases.push(vertex.x * 2.35 + vertex.y * 1.65 - vertex.z * 1.4);
+              }
+
+              const indices = mesh.geometry.index;
+              if (!indices) return;
+              const triangleCount = indices.count / 3;
+              const lineTarget = isCortex ? 1650 : 360;
+              const triangleStep = Math.max(1, Math.floor(triangleCount / lineTarget));
+              for (let triangle = meshIndex % triangleStep; triangle < triangleCount; triangle += triangleStep) {
+                const triangleOffset = triangle * 3;
+                const edgeOffset = triangle % 3;
+                const firstIndex = indices.getX(triangleOffset + edgeOffset);
+                const secondIndex = indices.getX(triangleOffset + ((edgeOffset + 1) % 3));
+                if (isCortex && curvature) {
+                  const edgeCurvature = -(curvature.getX(firstIndex) + curvature.getX(secondIndex)) * 0.5;
+                  if (edgeCurvature < 0.075) continue;
+                }
+                edgeStart.fromBufferAttribute(positions, firstIndex).applyMatrix4(mesh.matrixWorld);
+                edgeEnd.fromBufferAttribute(positions, secondIndex).applyMatrix4(mesh.matrixWorld);
+                linePositions.push(edgeStart.x, edgeStart.y, edgeStart.z, edgeEnd.x, edgeEnd.y, edgeEnd.z);
+                const phase = (edgeStart.x + edgeEnd.x) * 1.55 + (edgeStart.y + edgeEnd.y) * 1.15 - (edgeStart.z + edgeEnd.z) * 0.9;
+                linePhases.push(phase, phase);
+              }
+            });
+
+            const pointGeometry = new THREE.BufferGeometry();
+            pointGeometry.setAttribute("position", new THREE.Float32BufferAttribute(pointPositions, 3));
+            pointGeometry.setAttribute("phase", new THREE.Float32BufferAttribute(pointPhases, 1));
+            brainSignalPointMaterial = new THREE.ShaderMaterial({
+              uniforms: { time: { value: 0 } },
               vertexShader: `
-                varying vec2 vUv;
+                attribute float phase;
+                uniform float time;
+                varying float vPulse;
+
                 void main() {
-                  vUv = uv;
+                  float wave = 0.5 + 0.5 * sin(time * 2.25 + phase);
+                  vPulse = pow(wave, 3.0);
+                  vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+                  gl_PointSize = (2.8 + 7.2 * vPulse) * (4.8 / max(2.0, -viewPosition.z));
+                  gl_Position = projectionMatrix * viewPosition;
+                }
+              `,
+              fragmentShader: `
+                varying float vPulse;
+
+                void main() {
+                  float distanceFromCenter = length(gl_PointCoord - vec2(0.5));
+                  float alpha = smoothstep(0.5, 0.08, distanceFromCenter) * (0.24 + 0.76 * vPulse);
+                  gl_FragColor = vec4(1.0, 0.018, 0.004, alpha);
+                }
+              `,
+              transparent: true,
+              depthWrite: false,
+              blending: THREE.AdditiveBlending
+            });
+            brain.add(new THREE.Points(pointGeometry, brainSignalPointMaterial));
+
+            brainSignalHaloMaterial = new THREE.ShaderMaterial({
+              uniforms: { time: { value: 0 } },
+              vertexShader: `
+                attribute float phase;
+                uniform float time;
+                varying float vPulse;
+
+                void main() {
+                  float wave = 0.5 + 0.5 * sin(time * 2.25 + phase);
+                  vPulse = pow(wave, 2.4);
+                  vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+                  gl_PointSize = (8.0 + 18.0 * vPulse) * (4.8 / max(2.0, -viewPosition.z));
+                  gl_Position = projectionMatrix * viewPosition;
+                }
+              `,
+              fragmentShader: `
+                varying float vPulse;
+
+                void main() {
+                  float distanceFromCenter = length(gl_PointCoord - vec2(0.5));
+                  float halo = exp(-distanceFromCenter * distanceFromCenter * 10.0);
+                  gl_FragColor = vec4(1.0, 0.015, 0.0, halo * (0.018 + 0.16 * vPulse));
+                }
+              `,
+              transparent: true,
+              depthWrite: false,
+              blending: THREE.AdditiveBlending
+            });
+            brain.add(new THREE.Points(pointGeometry, brainSignalHaloMaterial));
+
+            const lineGeometry = new THREE.BufferGeometry();
+            lineGeometry.setAttribute("position", new THREE.Float32BufferAttribute(linePositions, 3));
+            lineGeometry.setAttribute("phase", new THREE.Float32BufferAttribute(linePhases, 1));
+            brainSignalLineMaterial = new THREE.ShaderMaterial({
+              uniforms: { time: { value: 0 } },
+              vertexShader: `
+                attribute float phase;
+                uniform float time;
+                varying float vPulse;
+
+                void main() {
+                  float wave = 0.5 + 0.5 * sin(time * 1.8 + phase);
+                  vPulse = pow(wave, 4.0);
                   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                 }
               `,
               fragmentShader: `
-                uniform sampler2D brainMap;
-                uniform float time;
-                varying vec2 vUv;
+                varying float vPulse;
 
                 void main() {
-                  vec4 texel = texture2D(brainMap, vUv);
-                  float redSignal = texel.r - max(texel.g, texel.b) * 0.58;
-                  float activation = smoothstep(0.12, 0.52, redSignal) * texel.a;
-                  float wave = 0.45 + 0.55 * sin(time * 1.65 + vUv.x * 11.0 - vUv.y * 6.0);
-                  float traveling = pow(max(0.0, sin(time * 1.28 - vUv.x * 8.0 + vUv.y * 4.5)), 3.0);
-                  float shimmer = 0.8 + 0.2 * sin(time * 3.1 - vUv.x * 18.0);
-                  vec3 glowColor = mix(vec3(0.72, 0.015, 0.01), vec3(1.0, 0.28, 0.08), wave);
-                  float signalAlpha = activation * (0.14 + wave * 0.42 + traveling * 0.38) * shimmer;
-                  gl_FragColor = vec4(glowColor, signalAlpha * 0.66);
+                  gl_FragColor = vec4(1.0, 0.018, 0.002, 0.1 + 0.88 * vPulse);
                 }
               `,
               transparent: true,
               depthWrite: false,
-              blending: THREE.AdditiveBlending,
-              side: THREE.DoubleSide
+              blending: THREE.AdditiveBlending
             });
-            const activityPlane = new THREE.Mesh(planeGeometry, activityMaterial);
-            activityPlane.position.z = 0.012;
-            brain.add(activityPlane);
+            brain.add(new THREE.LineSegments(lineGeometry, brainSignalLineMaterial));
 
-            brain.userData.baseMaterial = baseMaterial;
-            brain.userData.activityMaterial = activityMaterial;
+            const hotspotCanvas = document.createElement("canvas");
+            hotspotCanvas.width = 96;
+            hotspotCanvas.height = 96;
+            const hotspotContext = hotspotCanvas.getContext("2d");
+            const hotspotGradient = hotspotContext.createRadialGradient(48, 48, 2, 48, 48, 46);
+            hotspotGradient.addColorStop(0, "rgba(255,255,255,1)");
+            hotspotGradient.addColorStop(0.12, "rgba(255,66,36,0.95)");
+            hotspotGradient.addColorStop(0.42, "rgba(255,22,8,0.42)");
+            hotspotGradient.addColorStop(1, "rgba(255,0,0,0)");
+            hotspotContext.fillStyle = hotspotGradient;
+            hotspotContext.fillRect(0, 0, 96, 96);
+            const hotspotTexture = new THREE.CanvasTexture(hotspotCanvas);
+            const hotspotPositions = [
+              [-1.02, 0.54, 0.78, 0.54],
+              [-0.28, -0.48, 0.94, 0.66],
+              [0.55, 0.72, 0.84, 0.62],
+              [1.2, 0.08, 0.34, 0.5],
+              [0.78, -0.55, -0.05, 0.58],
+              [-0.82, -0.34, -0.62, 0.48]
+            ];
+            hotspotPositions.forEach(([x, y, z, baseScale], index) => {
+              const hotspotMaterial = new THREE.SpriteMaterial({
+                map: hotspotTexture,
+                color: 0xff1a08,
+                transparent: true,
+                opacity: 0.34,
+                depthWrite: false,
+                depthTest: true,
+                blending: THREE.AdditiveBlending
+              });
+              const hotspot = new THREE.Sprite(hotspotMaterial);
+              hotspot.position.set(x, y, z);
+              hotspot.scale.setScalar(baseScale);
+              hotspot.userData.baseScale = baseScale;
+              hotspot.userData.phase = index * 1.07;
+              brain.add(hotspot);
+              brainSignalHotspots.push(hotspot);
+            });
+
+            brainReady = true;
+            brainLoadedAt = performance.now() / 1000;
+            brainCanvas.classList.remove("brain-model-hidden", "brain-model-fallback");
+            updateBrainVisibility();
+            resize();
+          }, undefined, () => {
+            brainCanvas.classList.remove("brain-model-hidden");
+            brainCanvas.classList.add("brain-model-fallback");
           });
 
           const neuronCount = 92;
@@ -1794,26 +2027,24 @@
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
 
-            const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
-            const visibleWidth = visibleHeight * camera.aspect;
-            const sideMargin = Math.max(0, (width - 1440) / 2);
-            const brainPixelWidth = THREE.MathUtils.clamp(sideMargin + 30, 210, 350);
-            const brainScale = brainPixelWidth * visibleWidth / (width * brainPlaneWidth);
-            const brainCenterRatio = 0.5 - (brainPixelWidth * 0.5 + 18) / width;
-            brain.scale.set(brainScale, brainScale * 0.88, brainScale);
-            brain.position.set(
-              visibleWidth * brainCenterRatio,
-              visibleHeight * 0.18,
-              -0.35
-            );
-            brain.userData.baseY = brain.position.y;
+            const brainWidth = Math.round(brainCanvas.clientWidth);
+            const brainHeight = Math.round(brainCanvas.clientHeight);
+            if (brainWidth > 0 && brainHeight > 0) {
+              brainRenderer.setSize(brainWidth, brainHeight, false);
+              brainCamera.aspect = brainWidth / brainHeight;
+              brainCamera.updateProjectionMatrix();
+            }
             updateBrainVisibility();
             renderer.render(scene, camera);
+            if (brainReady && brainIsVisible) brainRenderer.render(brainScene, brainCamera);
           };
 
           const updateBrainVisibility = () => {
             const aboutIsVisible = aboutSection && aboutSection.getBoundingClientRect().bottom > 120;
-            brain.visible = window.innerWidth >= 1800 && Boolean(aboutIsVisible);
+            const canvasHasSize = brainCanvas.clientWidth > 0 && brainCanvas.clientHeight > 0;
+            brainIsVisible = brainReady && canvasHasSize && Boolean(aboutIsVisible);
+            brain.visible = brainIsVisible;
+            if (brainReady) brainCanvas.classList.toggle("brain-model-hidden", !brainIsVisible);
           };
 
           const updateConnections = () => {
@@ -1867,24 +2098,36 @@
             neuronAttribute.needsUpdate = true;
             updateConnections();
 
-            brain.rotation.x = -0.018 + pointer.y * 0.022 + Math.sin(elapsed * 0.28) * 0.018;
-            brain.rotation.y = Math.sin(elapsed * 0.32) * 0.22 + pointer.x * 0.06;
-            brain.rotation.z = Math.sin(elapsed * 0.19) * 0.02;
-            brain.position.y = (brain.userData.baseY ?? brain.position.y) + Math.sin(elapsed * 0.48) * 0.04;
-            if (brain.userData.baseMaterial) {
-              brain.userData.baseMaterial.opacity = 0.88 + Math.sin(elapsed * 0.62) * 0.025;
-            }
-            if (brain.userData.activityMaterial) {
-              brain.userData.activityMaterial.uniforms.time.value = elapsed;
+            if (brainReady) {
+              const brainElapsed = Math.max(0, elapsed - brainLoadedAt);
+              brain.rotation.x = -0.06 + pointer.y * 0.04 + Math.sin(brainElapsed * 0.4) * 0.07;
+              brain.rotation.y = brainElapsed * 0.22 - 0.7 + pointer.x * 0.08;
+              brain.rotation.z = Math.sin(brainElapsed * 0.28) * 0.025;
+              brainSignalPointMaterial.uniforms.time.value = brainElapsed;
+              brainSignalHaloMaterial.uniforms.time.value = brainElapsed;
+              brainSignalLineMaterial.uniforms.time.value = brainElapsed;
+              brainCortexMaterials.forEach((material) => {
+                if (material.userData.shader) material.userData.shader.uniforms.brainTime.value = brainElapsed;
+              });
+              brainSignalLight.intensity = 2.3 + Math.sin(brainElapsed * 2.15) * 0.7;
+              brainSignalLightBack.intensity = 1.5 + Math.sin(brainElapsed * 1.75 + 1.2) * 0.5;
+              brainSignalHotspots.forEach((hotspot) => {
+                const pulse = 0.5 + 0.5 * Math.sin(brainElapsed * 1.9 + hotspot.userData.phase);
+                const scale = hotspot.userData.baseScale * (0.84 + pulse * 0.34);
+                hotspot.scale.setScalar(scale);
+                hotspot.material.opacity = 0.16 + pulse * 0.42;
+              });
             }
             camera.position.x += (pointer.x * 0.12 - camera.position.x) * 0.025;
             camera.position.y += (-pointer.y * 0.08 - camera.position.y) * 0.025;
             renderer.render(scene, camera);
+            if (brainIsVisible) brainRenderer.render(brainScene, brainCamera);
           };
 
           const renderStatic = () => {
             updateConnections();
             renderer.render(scene, camera);
+            if (brainReady && brainIsVisible) brainRenderer.render(brainScene, brainCamera);
           };
 
           toggle.addEventListener("click", () => {
@@ -1903,14 +2146,25 @@
           window.addEventListener("resize", resize, { passive: true });
           window.addEventListener("scroll", updateBrainVisibility, { passive: true });
 
+          const brainResizeObserver = new ResizeObserver(resize);
+          brainResizeObserver.observe(brainCanvas);
+
           resize();
           updateConnections();
           updateButton();
           animationFrame = window.requestAnimationFrame(renderFrame);
+
+          window.addEventListener("pagehide", () => {
+            brainResizeObserver.disconnect();
+            renderer.dispose();
+            brainRenderer.dispose();
+          }, { once: true });
         })
         .catch(() => {
           stage.classList.add("is-static");
           toggle.hidden = true;
+          brainCanvas.classList.remove("brain-model-hidden");
+          brainCanvas.classList.add("brain-model-fallback");
         });
 
       window.addEventListener("pagehide", () => {
