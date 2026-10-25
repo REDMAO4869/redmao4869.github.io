@@ -456,6 +456,49 @@
       border-bottom: 1px solid var(--line);
     }
 
+    .intro-brain {
+      display: none;
+      float: right;
+      width: clamp(170px, 20vw, 230px);
+      height: auto;
+      margin: 2px 0 18px 26px;
+      opacity: 0.9;
+      filter: brightness(0.94) saturate(1.05) drop-shadow(0 12px 18px rgba(190, 34, 28, 0.17));
+      transform-origin: center;
+      animation: intro-brain-float 7.2s ease-in-out infinite;
+      will-change: filter, transform;
+    }
+
+    .ambient-motion-paused .intro-brain {
+      animation-play-state: paused;
+    }
+
+    @keyframes intro-brain-float {
+      0%, 100% {
+        filter: brightness(0.9) saturate(0.95) drop-shadow(0 12px 18px rgba(176, 28, 24, 0.14));
+        transform: perspective(720px) translateY(0) rotateX(-1deg) rotateY(-10deg) rotateZ(-0.7deg);
+      }
+
+      26% {
+        filter: brightness(1.16) saturate(1.3) drop-shadow(0 15px 24px rgba(226, 37, 29, 0.29));
+      }
+
+      50% {
+        filter: brightness(0.98) saturate(1.08) drop-shadow(0 14px 21px rgba(198, 30, 25, 0.2));
+        transform: perspective(720px) translateY(-8px) rotateX(1.5deg) rotateY(10deg) rotateZ(0.8deg);
+      }
+
+      76% {
+        filter: brightness(1.2) saturate(1.34) drop-shadow(0 16px 25px rgba(235, 47, 34, 0.31));
+      }
+    }
+
+    @media (min-width: 861px) and (max-width: 1799px) {
+      .intro-brain {
+        display: block;
+      }
+    }
+
     .intro h2 {
       margin-top: 0;
       font-size: 30px;
@@ -712,6 +755,10 @@
       border-bottom: 1px solid var(--line);
     }
 
+    .publication-card.wide-publication-card {
+      grid-template-columns: minmax(280px, 44%) minmax(0, 1fr);
+    }
+
     .publication-card:last-child {
       padding-bottom: 0;
       border-bottom: 0;
@@ -733,6 +780,11 @@
       border-radius: 6px;
       background: #ffffff;
       box-shadow: 0 10px 24px rgba(42, 51, 66, 0.12);
+    }
+
+    .wide-publication-card .publication-figure img {
+      aspect-ratio: 2.15 / 1;
+      object-fit: fill;
     }
 
     .publication-badge {
@@ -1072,6 +1124,10 @@
         gap: 14px;
       }
 
+      .publication-card.wide-publication-card {
+        grid-template-columns: 1fr;
+      }
+
       .publication-figure img {
         aspect-ratio: 16 / 9;
       }
@@ -1194,6 +1250,7 @@
     <div class="content">
       <section class="intro" id="about">
         <h2>About</h2>
+        <img class="intro-brain" src="assets/medical-brain-red.webp?v=20261026" alt="" aria-hidden="true">
         <p class="lead">
           I am Junfeng Xia (夏俊锋), a master's student in Biomedical Engineering at Southern University of Science and
           Technology, advised by Prof. <a href="https://scholar.google.com/citations?hl=en&amp;user=UpP9hJ8AAAAJ"><strong>Quanying Liu (刘泉影)</strong></a>. I expect to graduate in June 2027 and am applying for
@@ -1245,7 +1302,7 @@
         <h2>Selected Publications</h2>
         <p class="note">* denotes equal contribution.</p>
         <div class="publication-cards">
-          <article class="publication-card braindit-publication-card">
+          <article class="publication-card wide-publication-card braindit-publication-card">
             <figure class="publication-figure">
               <span class="publication-badge award-highlight">MICCAI 2026 BPA &amp; YSA Shortlist</span>
               <img src="assets/publications/brain-dit.png?v=20260921-cover" alt="Brain-DiT framework overview" loading="lazy">
@@ -1259,7 +1316,7 @@
               <img src="assets/animations/brain-dit-two-page.gif?v=20260921-two-page" alt="Two-page animated overview of Brain-DiT pretraining and downstream adaptation" loading="lazy" decoding="async">
             </figure>
           </article>
-          <article class="publication-card brainworld-publication-card">
+          <article class="publication-card wide-publication-card brainworld-publication-card">
             <figure class="publication-figure">
               <span class="publication-badge oral">NeurIPS 2026 · ORAL · TOP 0.36%</span>
               <img src="assets/publications/brainworld.png" alt="BrainWorld framework overview" loading="lazy">
@@ -1273,9 +1330,9 @@
               <img src="assets/animations/brainworld-complete-v7-web.gif?v=20260921" alt="Six-page animated overview of the BrainWorld framework" loading="lazy" decoding="async">
             </figure>
           </article>
-          <article class="publication-card brainsaber-publication-card">
+          <article class="publication-card wide-publication-card brainsaber-publication-card">
             <figure class="publication-figure">
-              <span class="publication-badge brainsaber-badge">arXiv 2026</span>
+              <span class="publication-badge brainsaber-badge">ICLR · UNDER REVIEW</span>
               <img src="assets/publications/brainsaber.png" alt="BrainSaber information decomposition framework for functional brain atlas construction" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -1300,7 +1357,7 @@
           </article>
           <article class="publication-card">
             <figure class="publication-figure">
-              <span class="publication-badge preprint">arXiv 2025</span>
+              <span class="publication-badge preprint">AAAI · UNDER REVIEW</span>
               <img src="assets/publications/slim-brain.png" alt="SLIM-Brain architecture overview" loading="lazy">
             </figure>
             <div class="publication-entry">
@@ -1309,7 +1366,7 @@
               <p class="publication-venue"><strong>arXiv:2512.21881</strong>, 2025. <span class="meta">Co-first author.</span><a class="publication-code-link" href="https://github.com/OneMore1/SLIM-Brain2026" target="_blank" rel="noopener noreferrer" aria-label="SLIM-Brain GitHub repository">GitHub</a></p>
             </div>
           </article>
-          <article class="publication-card">
+          <article class="publication-card wide-publication-card flexibrain-publication-card">
             <figure class="publication-figure">
               <span class="publication-badge">ECCV 2026</span>
               <img src="assets/publications/flexibrain.png" alt="FlexiBrain architecture overview" loading="lazy">
@@ -1600,86 +1657,80 @@
           camera.position.set(0, 0, 11);
 
           const brain = new THREE.Group();
+          const brainPlaneWidth = 4.2;
           const aboutSection = document.querySelector("#about");
           scene.add(brain);
 
           const brainTextureLoader = new THREE.TextureLoader();
-          brainTextureLoader.load("assets/neural-brain-reference.png?v=20261022", (sourceTexture) => {
-            const source = sourceTexture.image;
-            const scanCanvas = document.createElement("canvas");
-            scanCanvas.width = source.naturalWidth || source.width;
-            scanCanvas.height = source.naturalHeight || source.height;
-            const scanContext = scanCanvas.getContext("2d", { willReadFrequently: true });
-            scanContext.drawImage(source, 0, 0);
-            const scanImage = scanContext.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
-            const scanPixels = scanImage.data;
-            let minX = scanCanvas.width;
-            let minY = scanCanvas.height;
-            let maxX = 0;
-            let maxY = 0;
-
-            for (let y = 0; y < scanCanvas.height; y += 1) {
-              for (let x = 0; x < scanCanvas.width; x += 1) {
-                const offset = (y * scanCanvas.width + x) * 4;
-                const red = scanPixels[offset];
-                const green = scanPixels[offset + 1];
-                const blue = scanPixels[offset + 2];
-                const average = (red + green + blue) / 3;
-                const chroma = Math.max(red, green, blue) - Math.min(red, green, blue);
-                if (average > 247 && chroma < 10) continue;
-                minX = Math.min(minX, x);
-                minY = Math.min(minY, y);
-                maxX = Math.max(maxX, x);
-                maxY = Math.max(maxY, y);
-              }
-            }
-
-            const padding = 12;
-            minX = Math.max(0, minX - padding);
-            minY = Math.max(0, minY - padding);
-            maxX = Math.min(scanCanvas.width - 1, maxX + padding);
-            maxY = Math.min(scanCanvas.height - 1, maxY + padding);
-            const cropWidth = Math.max(1, maxX - minX + 1);
-            const cropHeight = Math.max(1, maxY - minY + 1);
-            const brainCanvas = document.createElement("canvas");
-            brainCanvas.width = cropWidth;
-            brainCanvas.height = cropHeight;
-            const brainContext = brainCanvas.getContext("2d", { willReadFrequently: true });
-            brainContext.drawImage(scanCanvas, minX, minY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-            const brainImage = brainContext.getImageData(0, 0, cropWidth, cropHeight);
-            const brainPixels = brainImage.data;
-
-            for (let offset = 0; offset < brainPixels.length; offset += 4) {
-              const red = brainPixels[offset];
-              const green = brainPixels[offset + 1];
-              const blue = brainPixels[offset + 2];
-              const average = (red + green + blue) / 3;
-              const chroma = Math.max(red, green, blue) - Math.min(red, green, blue);
-              const ink = Math.max((251 - average) / 34, chroma / 46);
-              brainPixels[offset + 3] = ink < 0.075
-                ? 0
-                : Math.round(THREE.MathUtils.clamp(Math.pow(ink, 0.72), 0, 1) * 255);
-            }
-            brainContext.putImageData(brainImage, 0, 0);
-
-            const brainTexture = new THREE.CanvasTexture(brainCanvas);
+          brainTextureLoader.load("assets/medical-brain-red.webp?v=20261026", (brainTexture) => {
             brainTexture.colorSpace = THREE.SRGBColorSpace;
-            brainTexture.needsUpdate = true;
-            const aspect = cropWidth / cropHeight;
-            const planeWidth = 3.7;
-            const planeGeometry = new THREE.PlaneGeometry(planeWidth, planeWidth / aspect);
-            const planeMaterial = new THREE.MeshBasicMaterial({
+            brainTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+
+            const source = brainTexture.image;
+            const aspect = (source.naturalWidth || source.width) / (source.naturalHeight || source.height);
+            const planeWidth = brainPlaneWidth;
+            const planeHeight = planeWidth / aspect;
+            const planeGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight, 36, 28);
+            const planePositions = planeGeometry.attributes.position;
+            for (let index = 0; index < planePositions.count; index += 1) {
+              const normalizedX = planePositions.getX(index) / (planeWidth * 0.5);
+              const normalizedY = planePositions.getY(index) / (planeHeight * 0.5);
+              const dome = Math.max(0, 1 - normalizedX * normalizedX - normalizedY * normalizedY);
+              planePositions.setZ(index, Math.sqrt(dome) * 0.17);
+            }
+            planePositions.needsUpdate = true;
+            planeGeometry.computeVertexNormals();
+            const baseMaterial = new THREE.MeshBasicMaterial({
               map: brainTexture,
               transparent: true,
-              opacity: 0.96,
-              alphaTest: 0.025,
+              opacity: 0.9,
+              alphaTest: 0.015,
               depthWrite: false,
               side: THREE.DoubleSide
             });
-            const brainPlane = new THREE.Mesh(planeGeometry, planeMaterial);
-            brain.add(brainPlane);
-            brain.userData.material = planeMaterial;
-            sourceTexture.dispose();
+            const basePlane = new THREE.Mesh(planeGeometry, baseMaterial);
+            brain.add(basePlane);
+
+            const activityMaterial = new THREE.ShaderMaterial({
+              uniforms: {
+                brainMap: { value: brainTexture },
+                time: { value: 0 }
+              },
+              vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+              `,
+              fragmentShader: `
+                uniform sampler2D brainMap;
+                uniform float time;
+                varying vec2 vUv;
+
+                void main() {
+                  vec4 texel = texture2D(brainMap, vUv);
+                  float redSignal = texel.r - max(texel.g, texel.b) * 0.58;
+                  float activation = smoothstep(0.12, 0.52, redSignal) * texel.a;
+                  float wave = 0.45 + 0.55 * sin(time * 1.65 + vUv.x * 11.0 - vUv.y * 6.0);
+                  float traveling = pow(max(0.0, sin(time * 1.28 - vUv.x * 8.0 + vUv.y * 4.5)), 3.0);
+                  float shimmer = 0.8 + 0.2 * sin(time * 3.1 - vUv.x * 18.0);
+                  vec3 glowColor = mix(vec3(0.72, 0.015, 0.01), vec3(1.0, 0.28, 0.08), wave);
+                  float signalAlpha = activation * (0.14 + wave * 0.42 + traveling * 0.38) * shimmer;
+                  gl_FragColor = vec4(glowColor, signalAlpha * 0.66);
+                }
+              `,
+              transparent: true,
+              depthWrite: false,
+              blending: THREE.AdditiveBlending,
+              side: THREE.DoubleSide
+            });
+            const activityPlane = new THREE.Mesh(planeGeometry, activityMaterial);
+            activityPlane.position.z = 0.012;
+            brain.add(activityPlane);
+
+            brain.userData.baseMaterial = baseMaterial;
+            brain.userData.activityMaterial = activityMaterial;
           });
 
           const neuronCount = 92;
@@ -1745,13 +1796,14 @@
 
             const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
             const visibleWidth = visibleHeight * camera.aspect;
-            const compact = width < 720;
-            const brainScale = width >= 1900 ? 1.08 : width >= 1200 ? 1 : 0.84;
-            const resolvedBrainScale = compact ? 0.72 : brainScale;
-            brain.scale.set(resolvedBrainScale, resolvedBrainScale * 0.8, resolvedBrainScale);
+            const sideMargin = Math.max(0, (width - 1440) / 2);
+            const brainPixelWidth = THREE.MathUtils.clamp(sideMargin + 30, 210, 350);
+            const brainScale = brainPixelWidth * visibleWidth / (width * brainPlaneWidth);
+            const brainCenterRatio = 0.5 - (brainPixelWidth * 0.5 + 18) / width;
+            brain.scale.set(brainScale, brainScale * 0.88, brainScale);
             brain.position.set(
-              visibleWidth * (compact ? 0.24 : 0.435),
-              visibleHeight * (compact ? 0.2 : 0.19),
+              visibleWidth * brainCenterRatio,
+              visibleHeight * 0.18,
               -0.35
             );
             brain.userData.baseY = brain.position.y;
@@ -1761,7 +1813,7 @@
 
           const updateBrainVisibility = () => {
             const aboutIsVisible = aboutSection && aboutSection.getBoundingClientRect().bottom > 120;
-            brain.visible = window.innerWidth >= 720 && Boolean(aboutIsVisible);
+            brain.visible = window.innerWidth >= 1800 && Boolean(aboutIsVisible);
           };
 
           const updateConnections = () => {
@@ -1815,12 +1867,15 @@
             neuronAttribute.needsUpdate = true;
             updateConnections();
 
-            brain.rotation.x = -0.035 + pointer.y * 0.025 + Math.sin(elapsed * 0.28) * 0.012;
-            brain.rotation.y = Math.sin(elapsed * 0.2) * 0.13 + pointer.x * 0.045;
-            brain.rotation.z = Math.sin(elapsed * 0.17) * 0.022;
-            brain.position.y = (brain.userData.baseY ?? brain.position.y) + Math.sin(elapsed * 0.55) * 0.035;
-            if (brain.userData.material) {
-              brain.userData.material.opacity = 0.93 + Math.sin(elapsed * 0.7) * 0.035;
+            brain.rotation.x = -0.018 + pointer.y * 0.022 + Math.sin(elapsed * 0.28) * 0.018;
+            brain.rotation.y = Math.sin(elapsed * 0.32) * 0.22 + pointer.x * 0.06;
+            brain.rotation.z = Math.sin(elapsed * 0.19) * 0.02;
+            brain.position.y = (brain.userData.baseY ?? brain.position.y) + Math.sin(elapsed * 0.48) * 0.04;
+            if (brain.userData.baseMaterial) {
+              brain.userData.baseMaterial.opacity = 0.88 + Math.sin(elapsed * 0.62) * 0.025;
+            }
+            if (brain.userData.activityMaterial) {
+              brain.userData.activityMaterial.uniforms.time.value = elapsed;
             }
             camera.position.x += (pointer.x * 0.12 - camera.position.x) * 0.025;
             camera.position.y += (-pointer.y * 0.08 - camera.position.y) * 0.025;
