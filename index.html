@@ -493,10 +493,14 @@
     }
 
     @media (min-width: 1800px) {
+      .content {
+        backdrop-filter: none;
+      }
+
       .intro-brain {
-        position: absolute;
-        top: 32px;
-        right: calc((1440px - 100vw) / 2 + 18px);
+        position: fixed;
+        top: 122px;
+        right: 18px;
         z-index: 2;
         display: block;
         float: none;
@@ -2041,7 +2045,8 @@
           };
 
           const updateBrainVisibility = () => {
-            const aboutIsVisible = aboutSection && aboutSection.getBoundingClientRect().bottom > 120;
+            const brainIsDocked = window.matchMedia("(min-width: 1800px)").matches;
+            const aboutIsVisible = brainIsDocked || (aboutSection && aboutSection.getBoundingClientRect().bottom > 120);
             const canvasHasSize = brainCanvas.clientWidth > 0 && brainCanvas.clientHeight > 0;
             brainIsVisible = brainReady && canvasHasSize && Boolean(aboutIsVisible);
             brain.visible = brainIsVisible;
